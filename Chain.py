@@ -15,17 +15,16 @@ class Chain(ProteinEntity):
         #full_id=(resname, hetflag, resseq, icode)
         #return "<Residue %s het=%s resseq=%s icode=%s>" % full_id
 
+    # Identity Methods
+    def residues(self, hash_key=None):
+        return self.__children(hash_key)
+
     def atoms(self):
         atoms = []
-        for r in self.residues:
-            atoms += r.atoms
+        for r in self.residues():
+            atoms += r.atoms()
         return atoms
 
-    def set_childrens_parents(self):
-        for residue in self.residues:
-            residue.set_parent(self)
-
-    # Identity Methods
     def model(self):
         return self.__parent
 

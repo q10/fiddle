@@ -15,7 +15,6 @@ class Atom(ProteinEntity):
         #full_id=(resname, hetflag, resseq, icode)
         #return "<Atom %s het=%s resseq=%s icode=%s>" % full_id
 
-
     def coords(self):
         return [self.x, self.y, self.z]
     def set_coords(self, nx, ny, nz):

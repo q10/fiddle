@@ -9,7 +9,7 @@ class Structure(ProteinEntity):
         ProteinEntity.__init__(self)
         # get PDBParser to parse out information here
         self.level = 'STRUCTURE'
-        self.models
+
 
     def __repr__(self):
         #resname=self.get_resname()
@@ -18,24 +18,23 @@ class Structure(ProteinEntity):
         #return "<Structure %s het=%s resseq=%s icode=%s>" % full_id
 
 
+    def models(self, hash_key=None):
+        return self.__children(hash_key)
+
     def chains(self):
         chains = []
-        for m in self.models:
-            chains += m.chains
+        for m in self.models():
+            chains += m.chains()
         return chains
 
     def residues(self):
         residues = []
         for c in self.chains():
-            residues += c.residues
+            residues += c.residues()
         return residues
 
     def atoms(self):
         atoms = []
         for r in self.residues():
-            atoms += r.atoms
+            atoms += r.atoms()
         return atoms
-
-    def set_childrens_parents(self):
-        for m in self.models:
-            m.set_parent(self)

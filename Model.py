@@ -14,7 +14,6 @@ class Model(ProteinEntity):
     def __init__(self, biopython_model):
         ProteinEntity.__init__(self)
         self.level = 'MODEL'
-        self.chains
         
     def __repr__(self):
         #resname=self.get_resname()
@@ -22,22 +21,21 @@ class Model(ProteinEntity):
         #full_id=(resname, hetflag, resseq, icode)
         #return "<Residue %s het=%s resseq=%s icode=%s>" % full_id
 
+    # Identity Methods
+    def chains(self, hash_key=None):
+        return self.__children(hash_key)
+
     def residues(self):
         residues = []
-        for c in self.chains:
-            residues += c.residues
+        for c in self.chains():
+            residues += c.residues()
         return residues
 
     def atoms(self):
         atoms = []
         for r in self.residues():
-            atoms += r.atoms
+            atoms += r.atoms()
         return atoms
 
-    def set_childrens_parents(self):
-        for chain in self.chains:
-            chain.set_parent(self)
-
-    # Identity Methods
     def structure(self):
         return self.__parent
