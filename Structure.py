@@ -6,20 +6,36 @@ class Structure(ProteinEntity):
     """
 
     def __init__(self, filename):
-        ProteinEntity.__init__(self)
         # get PDBParser to parse out information here
+        ProteinEntity.__init__(self)
         self.level = 'STRUCTURE'
 
 
+
+
+
+
+
+
+## FINISHED METHODS GO BELOW
+
     def __repr__(self):
-        #resname=self.get_resname()
-        #hetflag, resseq, icode=self.get_id()
-        #full_id=(resname, hetflag, resseq, icode)
-        #return "<Structure %s het=%s resseq=%s icode=%s>" % full_id
+        return "<Structure id=%s>" % self.id()
+
+    # Sub-entity manipulation methods
+    def add_model(self, model):
+        self.add_child(model)
+
+    def has_model_with_id(self, id):
+        return self.has_child_with_id(id)
+
+    def remove_model_with_id(self, id):
+        self.remove_child_with_id(id)
 
 
+    # Hierarchy Identity Methods
     def models(self, hash_key=None):
-        return self.__children(hash_key)
+        return self.children(hash_key)
 
     def chains(self):
         chains = []

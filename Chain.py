@@ -4,20 +4,29 @@ class Chain(ProteinEntity):
     """
     The object representing a chain of a poly-chain protein.
     """
-    def __init__(self, biopython_chain):
-        ProteinEntity.__init__(self)
-        self.level = 'CHAIN'
-        self.residues
+    def __init__(self, id):
+        ProteinEntity.__init__(self, 'CHAIN', id)
 
     def __repr__(self):
-        #resname=self.get_resname()
-        #hetflag, resseq, icode=self.get_id()
-        #full_id=(resname, hetflag, resseq, icode)
-        #return "<Residue %s het=%s resseq=%s icode=%s>" % full_id
+        return "<Chain id=%s>" % self.id()
 
-    # Identity Methods
+
+## FINISHED METHODS GO BELOW
+
+    # Sub-entity manipulation methods
+    def add_residue(self, residue):
+        self.add_child(residue)
+
+    def has_residue_with_id(self, id):
+        return self.has_child_with_id(id)
+
+    def remove_residue_with_id(self, id):
+        self.remove_child_with_id(id)
+
+
+    # Hierarchy Identity Methods
     def residues(self, hash_key=None):
-        return self.__children(hash_key)
+        return self.children(hash_key)
 
     def atoms(self):
         atoms = []
@@ -26,7 +35,10 @@ class Chain(ProteinEntity):
         return atoms
 
     def model(self):
-        return self.__parent
+        return self.parent()
 
     def structure(self):
-        return self.model().structure()
+        try:
+            return self.model().structure()
+        except:
+            return None

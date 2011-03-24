@@ -11,19 +11,33 @@ class Model(ProteinEntity):
     accessed alphabetically, i.e. model.chains['A']
     """
 
-    def __init__(self, biopython_model):
-        ProteinEntity.__init__(self)
-        self.level = 'MODEL'
-        
-    def __repr__(self):
-        #resname=self.get_resname()
-        #hetflag, resseq, icode=self.get_id()
-        #full_id=(resname, hetflag, resseq, icode)
-        #return "<Residue %s het=%s resseq=%s icode=%s>" % full_id
+    def __init__(self, id, serial_num=None):
+        ProteinEntity.__init__(self, 'MODEL', id)
 
-    # Identity Methods
+        if serial_num is None:
+            self.__serial_num = id
+        else:
+            self.__serial_num = serial_num
+
+
+    def __repr__(self):
+        return "<Model id=%s>" % self.id()
+
+
+    # Sub-entity manipulation methods
+    def add_chain(self, chain):
+        self.add_child(chain)
+
+    def has_chain_with_id(self, id):
+        return self.has_child_with_id(id)
+
+    def remove_chain_with_id(self, id):
+        self.remove_child_with_id(id)
+
+
+    # Hierarchy Identity Methods
     def chains(self, hash_key=None):
-        return self.__children(hash_key)
+        return self.children(hash_key)
 
     def residues(self):
         residues = []
@@ -38,4 +52,4 @@ class Model(ProteinEntity):
         return atoms
 
     def structure(self):
-        return self.__parent
+        return self.parent()
