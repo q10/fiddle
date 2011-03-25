@@ -5,31 +5,19 @@ class Residue(ProteinEntity):
     Represents a residue. A Residue contains a list of
     atoms indexed numerically, i.e. residue.atoms[0]
     """
-    def __init__(self, id, resname, segid):
+    def __init__(self, id, name, segid):
         ProteinEntity.__init__(self, 'RESIDUE', id)
-        self.__disordered=0
-        self.__resname=resname
+        self.__disordered = 0
+        self.__name=name
         self.__segid=segid
 
 
     def __repr__(self):
-        #resname=self.get_resname()
-        #hetflag, resseq, icode=self.get_id()
-        #full_id=(resname, hetflag, resseq, icode)
-        #return "<Residue %s het=%s resseq=%s icode=%s>" % full_id
+        hetflag, resseq, icode=self.id()
+        full_id=(self.__name, hetflag, resseq, icode)
+        return "<Residue %s het=%s resseq=%s icode=%s>" % full_id
 
 
-    '''
-    def flag_disordered(self):
-        "Set the disordered flag."
-        self.disordered=1
-
-    def is_disordered(self):
-        "Return 1 if the residue contains disordered atoms."
-        return self.disordered
-    '''
-    def get_resname(self):
-        return self.resname
 
     def get_unpacked_list(self):
         """
@@ -50,6 +38,17 @@ class Residue(ProteinEntity):
 
 
 ## FINISHED METHODS GO BELOW
+
+    def flag_disordered(self):
+        "Set the disordered flag."
+        self.__disordered=1
+
+    def is_disordered(self):
+        "Return 1 if the residue contains disordered atoms."
+        return self.__disordered
+
+    def name(self):
+        return self.__name
 
     # Sub-entity manipulation methods
     def add_atom(self, atom):

@@ -1,4 +1,5 @@
 from ProteinEntity import ProteinEntity
+from PDBInfo import PDBInfo
 
 class Structure(ProteinEntity):
     """
@@ -7,20 +8,28 @@ class Structure(ProteinEntity):
 
     def __init__(self, filename):
         # get PDBParser to parse out information here
-        ProteinEntity.__init__(self)
+        ProteinEntity.__init__(self, 'STRUCTURE', 0)
+        self.__info = PDBInfo(filename)
         self.level = 'STRUCTURE'
-
-
-
-
-
-
 
 
 ## FINISHED METHODS GO BELOW
 
     def __repr__(self):
         return "<Structure id=%s>" % self.id()
+
+    def show_info(self):
+        print(self.__info)
+
+    def info(self, hash_key=None):
+        if hash_key is None:
+            return self.__info.full_description()
+        else:
+            return self.__info[hash_key]
+
+    def info_keys(self):
+        return self.__info.keys()
+
 
     # Sub-entity manipulation methods
     def add_model(self, model):
