@@ -15,7 +15,7 @@ class Chain(ProteinEntity):
 
     # Sub-entity manipulation methods
     def add_residue(self, residue):
-        self.add_child(residue)
+        self.add_child(residue, residue.id())
 
     def has_residue_with_id(self, id):
         return self.has_child_with_id(id)

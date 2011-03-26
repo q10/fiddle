@@ -26,7 +26,7 @@ class Model(ProteinEntity):
 
     # Sub-entity manipulation methods
     def add_chain(self, chain):
-        self.add_child(chain)
+        self.add_child(chain, chain.id())
 
     def has_chain_with_id(self, id):
         return self.has_child_with_id(id)

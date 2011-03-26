@@ -1,5 +1,6 @@
-import numpy
-from ProteinEntity import ProteinEntity
+import numpy, warnings
+from Exceptions import PDBConstructionWarning
+from ProteinEntity import ProteinEntity, DisorderedProteinEntity
 
 class Atom(ProteinEntity):
 
@@ -34,28 +35,38 @@ class Atom(ProteinEntity):
     @type fullname: uppercase string (or None if unknown)
     """
 
-    def __init__(self, name, coords, bfactor, occupancy, altloc, serial_number,
-                 element=None):
-        ProteinEntity.__init__(self, 'ATOM')
+    def __init__(self, name, coords, bfactor, occupancy, altloc, serial_number, element=None):
+        ProteinEntity.__init__(self, 'ATOM', name)
 
-        self.__name=name      # eg. CA, spaces are removed from atom name
-        self.__coords=coords
-        self.__bfactor=bfactor
-        self.__occupancy=occupancy
-        self.__altloc=altloc
-        self.__full_id=None   # (structure id, model id, chain id, residue id, atom id)
-        self.__disordered_flag=0
-        self.__anisou_array=None
-        self.__siguij_array=None
-        self.__sigatm_array=None
-        self.__serial_number=serial_number
+        self.__name = name      # eg. CA, spaces are removed from atom name
+        self.__coords = coords
+        self.__bfactor = bfactor
+        self.__occupancy = occupancy
+        self.__altloc = altloc
+        self.__full_id = None   # (structure id, model id, chain id, residue id, atom id)
+        self.__disordered_flag = 0
+        self.__anisou_array = None
+        self.__siguij_array = None
+        self.__sigatm_array = None
+        self.__serial_number = serial_number
+        self.element = self.__derive_element(name, element)
+
+        # Hash that keeps additional properties
+        self.xtra={}
+
+
+    def __derive_element(self, name, element):
+        if not element:
+            warnings.warn("Atom object (name=%s) without element" % name, PDBConstructionWarning)
+            element = "?"
+            print(name, "--> ?")
+        elif len(element)>2 or element != element.upper() or element != element.strip():
+            raise ValueError(element)
+        return element
+
 
     def __repr__(self):
-        #resname=self.get_resname()
-        #hetflag, resseq, icode=self.get_id()
-        #full_id=(resname, hetflag, resseq, icode)
-        #return "<Atom %s het=%s resseq=%s icode=%s>" % full_id
-
+        return "<Atom %s>" % self.id()
 
     # Coordinates methods
 
@@ -153,11 +164,7 @@ class Atom(ProteinEntity):
     def serial_number(self):
         return self.__serial_number
 
-    # The next two methods are the same
     def name(self):
-        return self.__name
-
-    def id(self):
         return self.__name
 
     def full_id(self):
@@ -166,7 +173,7 @@ class Atom(ProteinEntity):
         The full id of an atom is the tuple
         (structure id, model id, chain id, residue id, atom name, altloc).
         """
-        return self.parent.full_id()+((self.name, self.altloc),)
+        return self.parent().full_id()+((self.name, self.altloc),)
 
     def bfactor(self):
         "Return B factor."
@@ -184,14 +191,64 @@ class Atom(ProteinEntity):
         "Return alternative location specifier."
         return self.__altloc
 
-    def level(self):
-        return self.__level
+    def disorder_identifier(self):
+        return self.__altloc
+
+    # Hierarchy Identity Methods
+    def residue(self):
+        return self.parent()
+
+    def chain(self):
+        try:
+            return self.residue().chain()
+        except:
+            return None
+
+    def model(self):
+        try:
+            return self.chain().model()
+        except:
+            return None
+
+    def structure(self):
+        try:
+            return self.model().structure()
+        except:
+            return None
 
 
+class DisorderedAtom(DisorderedProteinEntity):
+    def __init__(self, id):
+        """
+        Arguments:
+        o id - string, atom name
+        """
+        self.__last_occupancy=-1.0
+        DisorderedProteinEntity.__init__(self, 'DISORDERED ATOM', id)
 
+    def __repr__(self):
+        return "<Disordered Atom %s>" % self.id()
+
+    def add_atom(self, atom):
+        self.add_child(atom, atom.disorder_identifier())
+        occupancy = atom.occupancy()
+        if occupancy > self.__last_occupancy:
+            self.__last_occupancy = occupancy
+            self.set_main_disordered_child(atom)
+
+    def has_alternate_atom_with_altloc(self, altloc):
+        return self.has_child_with_id(altloc)
+
+    def remove_alternate_atom_with_altloc(self, altloc):
+        self.remove_child_with_id(altloc)
+        # need to check disordered_select on removing child and to check if disordered_children is empty
 
 
     # Hierarchy Identity Methods
+
+    def alternate_atoms(self, hash_key=None):
+        return self.children(hash_key)
+
     def residue(self):
         return self.parent()
 
