@@ -8,7 +8,7 @@ class Residue(ProteinEntity):
     """
     def __init__(self, id, name, segid):
         ProteinEntity.__init__(self, 'RESIDUE', id)
-        self.__disordered = 0
+        self.__disordered = False
         self.__name = name
         self.__segid = segid
 
@@ -19,32 +19,15 @@ class Residue(ProteinEntity):
         return "<Residue %s het=%s resseq=%s icode=%s>" % full_id
 
 
-
-    def get_unpacked_list(self):
-        """
-        Returns the list of all atoms, unpack DisorderedAtoms."
-        """
-        atom_list=self.get_list()
-        undisordered_atom_list=[]
-        for atom in atom_list:
-            if atom.is_disordered():
-                undisordered_atom_list=(undisordered_atom_list+ atom.disordered_get_list())
-            else:
-                undisordered_atom_list.append(atom)
-        return undisordered_atom_list
-
     def segid(self):
         return self.__segid
 
     def disorder_identifier(self):
         self.__name
 
-
-## FINISHED METHODS GO BELOW
-
     def flag_disordered(self):
         "Set the disordered flag."
-        self.__disordered=1
+        self.__disordered = True
 
     def is_disordered(self):
         "Return 1 if the residue contains disordered atoms."
@@ -53,7 +36,9 @@ class Residue(ProteinEntity):
     def name(self):
         return self.__name
 
+
     # Sub-entity manipulation methods
+
     def add_atom(self, atom):
         self.add_child(atom, atom.id())
 
@@ -65,11 +50,28 @@ class Residue(ProteinEntity):
 
 
     # Hierarchy Identity Methods
-    def atoms(self, hash_key=None):
-        return self.children(hash_key)
 
     def chain(self):
         return self.parent()
+
+    def atoms(self, hash_key=None):
+        """
+        Returns the list atoms, treating DisorderedAtoms as one."
+        """
+        return self.children(hash_key)
+
+    def all_atoms(self):
+        """
+        Returns the list of ALL atoms, unpacking the DisorderedAtoms as well."
+        """
+        undisordered_atom_list=[]
+        for atom in self.atoms():
+            if atom.is_disordered():
+                undisordered_atom_list = (undisordered_atom_list + atom.disordered_atoms())
+            else:
+                undisordered_atom_list.append(atom)
+        return undisordered_atom_list
+
 
 
 class DisorderedResidue(DisorderedProteinEntity):
@@ -78,7 +80,7 @@ class DisorderedResidue(DisorderedProteinEntity):
         Arguments:
         o id - string, atom name
         """
-        self.__last_occupancy=-1
+        self.__last_occupancy = -1
         DisorderedProteinEntity.__init__(self, 'DISORDERED RESIDUE', id)
 
 
@@ -93,41 +95,36 @@ class DisorderedResidue(DisorderedProteinEntity):
         self.set_main_disordered_child(residue)
 
     def add_atom_to_residue(self, atom, residue_id=None):
-        try:
-            assert(residue_id is not None)
-            residue = self.children(residue_id)
-            assert(residue is not None)
-        except:
-            raise ProteinManipulationException( \
-                "No such residue with disorder identifier %s " \
-                % (residue_id) )
-        else:
-            residue.add_atom(atom)
+        residue = self.__get_residue(residue_id)
+        residue.add_atom(atom)
 
     def remove_atom_from_residue(self, atom_id, residue_id=None):
-        try:
-            assert(residue_id is not None)
-            residue = self.children(residue_id)
-            assert(residue is not None)
-        except:
-            raise ProteinManipulationException( \
-                "No such residue with disorder identifier %s " \
-                % (residue_id) )
-        else:
-            residue.remove_atom_with_id(atom_id)
+        residue = self.__get_residue(residue_id)
+        residue.remove_atom_with_id(atom_id)
 
     def has_residue_with_name(self, name):
         return self.has_child_with_id(name)
 
     def remove_residue_with_name(self, name):
         self.remove_child_with_id(name)
-        # need to check disordered_select on removing child and to check if disordered_children is empty
 
     def reset_main_disorder_identifier(self):
         new_id = None
         if len(self.children()) is not 0:
             new_id  = self.children_keys()[-1]
         self.set_main_disorder_identifier(new_id)
+
+    def __get_residue(self, residue_id):
+        try:
+            if residue_id is None:
+                    residue_id = self.main_disorder_identifier()
+            residue = self.children(residue_id)
+            assert(residue is not None)
+            return residue
+        except:
+            raise ProteinManipulationException( \
+                "No such residue with disorder identifier %s belonging to %s" \
+                % (residue_id, self) )
 
 
     # Hierarchy Identity Methods

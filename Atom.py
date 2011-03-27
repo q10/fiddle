@@ -44,7 +44,7 @@ class Atom(ProteinEntity):
         self.__occupancy = occupancy
         self.__altloc = altloc
         self.__full_id = None   # (structure id, model id, chain id, residue id, atom id)
-        self.__disordered_flag = 0
+        self.__disordered_flag = False
         self.__anisou_array = None
         self.__siguij_array = None
         self.__sigatm_array = None
@@ -140,7 +140,7 @@ class Atom(ProteinEntity):
 
         The disordered flag indicates whether the atom is disordered or not.
         """
-        self.__disordered_flag=1
+        self.__disordered_flag = True
 
 
     # Public get methods for attributes
@@ -236,6 +236,7 @@ class DisorderedAtom(DisorderedProteinEntity):
                     best_disorder_id = key
                     self.__last_occupancy = occupancy
         self.set_main_disorder_identifier(best_disorder_id)
+
 
     # Hierarchy Identity Methods
 

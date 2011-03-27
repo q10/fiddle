@@ -11,9 +11,8 @@ class Chain(ProteinEntity):
         return "<Chain id=%s>" % self.id()
 
 
-## FINISHED METHODS GO BELOW
-
     # Sub-entity manipulation methods
+
     def add_residue(self, residue):
         self.add_child(residue, residue.id())
 
@@ -25,6 +24,7 @@ class Chain(ProteinEntity):
 
 
     # Hierarchy Identity Methods
+
     def residues(self, hash_key=None):
         return self.children(hash_key)
 
