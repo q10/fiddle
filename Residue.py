@@ -71,19 +71,6 @@ class Residue(ProteinEntity):
     def chain(self):
         return self.parent()
 
-    def model(self):
-        try:
-            return self.chain().model()
-        except:
-            return None
-
-    def structure(self):
-        try:
-            return self.model().structure()
-        except:
-            return None
-
-
 
 class DisorderedResidue(DisorderedProteinEntity):
     def __init__(self, id):
@@ -98,14 +85,18 @@ class DisorderedResidue(DisorderedProteinEntity):
     def __repr__(self):
         return "<Disordered RESIDUE %s>" % self.id()
 
+
+    # Sub-entity manipulation methods
+    
     def add_residue(self, residue):
         self.add_child(residue, residue.disorder_identifier())
         self.set_main_disordered_child(residue)
 
-    def add_atom_to_residue(self, atom, residue_id=self.main_disorder_identifier()):
+    def add_atom_to_residue(self, atom, residue_id=None):
         try:
             assert(residue_id is not None)
             residue = self.children(residue_id)
+            assert(residue is not None)
         except:
             raise ProteinManipulationException( \
                 "No such residue with disorder identifier %s " \
@@ -113,42 +104,36 @@ class DisorderedResidue(DisorderedProteinEntity):
         else:
             residue.add_atom(atom)
 
-    def remove_atom_from_residue(self, id, residue_id=self.main_disorder_identifier()):
+    def remove_atom_from_residue(self, atom_id, residue_id=None):
         try:
             assert(residue_id is not None)
             residue = self.children(residue_id)
+            assert(residue is not None)
         except:
             raise ProteinManipulationException( \
                 "No such residue with disorder identifier %s " \
                 % (residue_id) )
         else:
-            residue.remove_atom_with_id(id)
+            residue.remove_atom_with_id(atom_id)
 
-    def has_alternate_residue_with_name(self, name):
+    def has_residue_with_name(self, name):
         return self.has_child_with_id(name)
 
-    def remove_alternate_residue_with_name(self, name):
+    def remove_residue_with_name(self, name):
         self.remove_child_with_id(name)
         # need to check disordered_select on removing child and to check if disordered_children is empty
+
+    def reset_main_disorder_identifier(self):
+        new_id = None
+        if len(self.children()) is not 0:
+            new_id  = self.children_keys()[-1]
+        self.set_main_disorder_identifier(new_id)
 
 
     # Hierarchy Identity Methods
 
-    def alternate_residues(self, hash_key=None):
+    def disordered_residues(self, hash_key=None):
         return self.children(hash_key)
 
     def chain(self):
         return self.parent()
-
-    def model(self):
-        try:
-            return self.chain().model()
-        except:
-            return None
-
-    def structure(self):
-        try:
-            return self.model().structure()
-        except:
-            return None
-    

@@ -198,24 +198,6 @@ class Atom(ProteinEntity):
     def residue(self):
         return self.parent()
 
-    def chain(self):
-        try:
-            return self.residue().chain()
-        except:
-            return None
-
-    def model(self):
-        try:
-            return self.chain().model()
-        except:
-            return None
-
-    def structure(self):
-        try:
-            return self.model().structure()
-        except:
-            return None
-
 
 class DisorderedAtom(DisorderedProteinEntity):
     def __init__(self, id):
@@ -236,36 +218,29 @@ class DisorderedAtom(DisorderedProteinEntity):
             self.__last_occupancy = occupancy
             self.set_main_disordered_child(atom)
 
-    def has_alternate_atom_with_altloc(self, altloc):
+    def has_atom_with_altloc(self, altloc):
         return self.has_child_with_id(altloc)
 
-    def remove_alternate_atom_with_altloc(self, altloc):
+    def remove_atom_with_altloc(self, altloc):
         self.remove_child_with_id(altloc)
         # need to check disordered_select on removing child and to check if disordered_children is empty
 
+    # also resets the __last_occupancy
+    def reset_main_disorder_identifier(self):
+        best_disorder_id = None
+        if len(self.children()) is not 0:
+            self.__last_occupancy = -1
+            for key in self.children_keys():
+                occupancy = self.children(key).occupancy()
+                if occupancy > self.__last_occupancy:
+                    best_disorder_id = key
+                    self.__last_occupancy = occupancy
+        self.set_main_disorder_identifier(best_disorder_id)
 
     # Hierarchy Identity Methods
 
-    def alternate_atoms(self, hash_key=None):
+    def disordered_atoms(self, hash_key=None):
         return self.children(hash_key)
 
     def residue(self):
         return self.parent()
-
-    def chain(self):
-        try:
-            return self.residue().chain()
-        except:
-            return None
-
-    def model(self):
-        try:
-            return self.chain().model()
-        except:
-            return None
-
-    def structure(self):
-        try:
-            return self.model().structure()
-        except:
-            return None

@@ -32,6 +32,7 @@ class Structure(ProteinEntity):
 
 
     # Sub-entity manipulation methods
+
     def add_model(self, model):
         self.add_child(model, model.id())
 

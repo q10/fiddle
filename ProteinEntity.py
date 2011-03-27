@@ -18,6 +18,9 @@ class ProteinEntity:
             except:
                 return None
 
+    def children_keys(self):
+        return list(self.__children.keys())
+    
     def id(self):
         return self.__id
 
@@ -107,6 +110,34 @@ class ProteinEntity:
         return self.__full_id
 
 
+    # Hierarchy Identity Methods - some will be overwritten by subclasses
+    def structure(self):
+        try:
+            return self.parent().structure()
+        except:
+            return None
+
+    def model(self):
+        try:
+            return self.parent().model()
+        except:
+            return None
+
+    def chain(self):
+        try:
+            return self.parent().chain()
+        except:
+            return None
+
+    def residue(self):
+        try:
+            return self.parent().residue()
+        except:
+            return None
+
+
+
+
 class DisorderedProteinEntity(ProteinEntity):
     def __init__(self, level, id):
         ProteinEntity.__init__(self, level, id)
@@ -123,6 +154,23 @@ class DisorderedProteinEntity(ProteinEntity):
     def main_disorder_identifier(self):
         return self.__main_disorder_identifier
 
+    def set_main_disorder_identifier(self, id):
+        if self.children(id) is None:
+            raise ProteinManipulationException( \
+                "DisorderedProteinEntity %s has no sub-entity with disorder identifier %s " \
+                % (self, id) )
+        else:
+            self.__main_disorder_identifier = id
+
     def main_child(self):
-        return self.children(self.__main_disorder_identifier)
-    # need to check disordered_select on removing child, and to check if disordered_children is empty
+        if self.__main_disorder_identifier is None:
+            return None
+        else:
+            return self.children(self.__main_disorder_identifier)
+
+    def remove_child_with_id(self, disorder_id):
+        child = self.children(disorder_id)
+        ProteinEntity.remove_child_with_id(self, disorder_id)
+
+        if child is not None and child.disorder_identifier() == self.__main_disorder_identifier:
+            self.reset_main_disorder_identifier()

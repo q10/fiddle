@@ -36,9 +36,3 @@ class Chain(ProteinEntity):
 
     def model(self):
         return self.parent()
-
-    def structure(self):
-        try:
-            return self.model().structure()
-        except:
-            return None
