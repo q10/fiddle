@@ -174,3 +174,14 @@ class DisorderedProteinEntity(ProteinEntity):
 
         if child is not None and child.disorder_identifier() == self.__main_disorder_identifier:
             self.reset_main_disorder_identifier()
+
+    def set_parent(self, parent):
+        ProteinEntity.set_parent(self, parent)
+        for sub_child in self.children():
+            sub_child.set_parent(parent)
+
+    def detach_parent(self):
+        ProteinEntity.detach_parent(self)
+        for sub_child in self.children():
+            sub_child.detach_parent()
+

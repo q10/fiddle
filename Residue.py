@@ -23,7 +23,7 @@ class Residue(ProteinEntity):
         return self.__segid
 
     def disorder_identifier(self):
-        self.__name
+        return self.__name
 
     def flag_disordered(self):
         "Set the disordered flag."
@@ -119,7 +119,7 @@ class DisorderedResidue(DisorderedProteinEntity):
             if residue_id is None:
                     residue_id = self.main_disorder_identifier()
             residue = self.children(residue_id)
-            assert(residue is not None)
+            assert(residue is not None and (not isinstance(residue, list)))
             return residue
         except:
             raise ProteinManipulationException( \
