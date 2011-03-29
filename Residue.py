@@ -8,7 +8,9 @@ class Residue(ProteinEntity):
     """
     def __init__(self, id, name, segid):
         ProteinEntity.__init__(self, 'RESIDUE', id)
-        self.__disordered = False
+        self.__direct_parent = None
+
+        self.__disordered = 0
         self.__name = name
         self.__segid = segid
 
@@ -27,7 +29,7 @@ class Residue(ProteinEntity):
 
     def flag_disordered(self):
         "Set the disordered flag."
-        self.__disordered = True
+        self.__disordered = 1
 
     def is_disordered(self):
         "Return 1 if the residue contains disordered atoms."
@@ -48,11 +50,32 @@ class Residue(ProteinEntity):
     def remove_atom_with_id(self, id):
         self.remove_child_with_id(id)
 
+    def set_direct_parent(self, new_parent):
+        self.__direct_parent = new_parent
+
+    def detach_direct_parent(self):
+        self.set_direct_parent(None)
+
 
     # Hierarchy Identity Methods
 
+    def direct_parent(self):
+        return self.__direct_parent
+
     def chain(self):
         return self.parent()
+
+    def model(self):
+        try:
+            return self.parent().model()
+        except:
+            return None
+
+    def structure(self):
+        try:
+            return self.parent().structure()
+        except:
+            return None
 
     def atoms(self, hash_key=None):
         """
@@ -66,7 +89,7 @@ class Residue(ProteinEntity):
         """
         undisordered_atom_list=[]
         for atom in self.atoms():
-            if atom.is_disordered():
+            if atom.is_disordered() is 2:
                 undisordered_atom_list = (undisordered_atom_list + atom.disordered_atoms())
             else:
                 undisordered_atom_list.append(atom)
@@ -129,8 +152,23 @@ class DisorderedResidue(DisorderedProteinEntity):
 
     # Hierarchy Identity Methods
 
+    def main_residue(self):
+        return self.children(self.main_disorder_identifier())
+
     def disordered_residues(self, hash_key=None):
         return self.children(hash_key)
 
     def chain(self):
         return self.parent()
+
+    def model(self):
+        try:
+            return self.parent().model()
+        except:
+            return None
+
+    def structure(self):
+        try:
+            return self.parent().structure()
+        except:
+            return None

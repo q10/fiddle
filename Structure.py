@@ -1,4 +1,6 @@
+import os
 from ProteinEntity import ProteinEntity
+from PDBCoordsParser import PDBCoordsParser
 from PDBInfo import PDBInfo
 
 class Structure(ProteinEntity):
@@ -6,14 +8,20 @@ class Structure(ProteinEntity):
     The Structure class contains a collection of Model instances.
     """
 
-    def __init__(self, filename):
+    def __init__(self, filename, id=None):
         # get PDBParser to parse out information here
-        ProteinEntity.__init__(self, 'STRUCTURE', 0)
+
+        assert(isinstance(filename, str))
+        if id is None or id is '':
+            id = os.path.basename(filename).split('.')[0]
+        ProteinEntity.__init__(self, 'STRUCTURE', id)
+
+        all_models = PDBCoordsParser().get_structure(filename)
+        for model in all_models:
+            self.add_model(model)
+
         self.__info = PDBInfo(filename)
-        self.level = 'STRUCTURE'
 
-
-## FINISHED METHODS GO BELOW
 
     def __repr__(self):
         return "<Structure id=%s>" % self.id()

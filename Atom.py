@@ -35,8 +35,9 @@ class Atom(ProteinEntity):
     @type fullname: uppercase string (or None if unknown)
     """
 
-    def __init__(self, name, coords, bfactor, occupancy, altloc, serial_number, element=None):
+    def __init__(self, name, coords, bfactor, occupancy, altloc, fullname, serial_number, element=None):
         ProteinEntity.__init__(self, 'ATOM', name)
+        self.__direct_parent = None
 
         self.__name = name      # eg. CA, spaces are removed from atom name
         self.__coords = coords
@@ -44,7 +45,8 @@ class Atom(ProteinEntity):
         self.__occupancy = occupancy
         self.__altloc = altloc
         self.__full_id = None   # (structure id, model id, chain id, residue id, atom id)
-        self.__disordered_flag = False
+        self.__fullname = fullname
+        self.__disordered_flag = 0
         self.__anisou_array = None
         self.__siguij_array = None
         self.__sigatm_array = None
@@ -86,6 +88,7 @@ class Atom(ProteinEntity):
         self.__coords = new_coords
 
     def distance_from(self, other_atom):
+        assert(isinstance(other_atom, Atom))
         diff = self.coords() - other_atom.coords()
         return numpy.sqrt(numpy.dot(diff, diff))
 
@@ -140,10 +143,18 @@ class Atom(ProteinEntity):
 
         The disordered flag indicates whether the atom is disordered or not.
         """
-        self.__disordered_flag = True
+        self.__disordered_flag = 1
 
+    def direct_parent(self):
+        return self.__direct_parent
 
     # Public get methods for attributes
+
+    def set_direct_parent(self, new_parent):
+        self.__direct_parent = new_parent
+
+    def detach_direct_parent(self):
+        self.set_direct_parent(None)
 
     def is_disordered(self):
         "Return the disordered flag (1 if disordered, 0 otherwise)."
@@ -166,6 +177,9 @@ class Atom(ProteinEntity):
 
     def name(self):
         return self.__name
+
+    def fullname(self):
+        return self.__fullname
 
     def full_id(self):
         """Return the full id of the atom.
@@ -194,9 +208,32 @@ class Atom(ProteinEntity):
     def disorder_identifier(self):
         return self.__altloc
 
+
     # Hierarchy Identity Methods
+
     def residue(self):
-        return self.parent()
+        try:
+            return self.parent()
+        except:
+            return None
+
+    def chain(self):
+        try:
+            return self.parent().chain()
+        except:
+            return None
+
+    def model(self):
+        try:
+            return self.parent().model()
+        except:
+            return None
+
+    def structure(self):
+        try:
+            return self.parent().structure()
+        except:
+            return None
 
 
 class DisorderedAtom(DisorderedProteinEntity):
@@ -223,7 +260,6 @@ class DisorderedAtom(DisorderedProteinEntity):
 
     def remove_atom_with_altloc(self, altloc):
         self.remove_child_with_id(altloc)
-        # need to check disordered_select on removing child and to check if disordered_children is empty
 
     # also resets the __last_occupancy
     def reset_main_disorder_identifier(self):
@@ -240,8 +276,29 @@ class DisorderedAtom(DisorderedProteinEntity):
 
     # Hierarchy Identity Methods
 
+    def main_atom(self):
+        return self.children(self.main_disorder_identifier())
+
     def disordered_atoms(self, hash_key=None):
         return self.children(hash_key)
 
     def residue(self):
         return self.parent()
+
+    def chain(self):
+        try:
+            return self.parent().chain()
+        except:
+            return None
+
+    def model(self):
+        try:
+            return self.parent().model()
+        except:
+            return None
+
+    def structure(self):
+        try:
+            return self.parent().structure()
+        except:
+            return None

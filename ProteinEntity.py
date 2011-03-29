@@ -28,7 +28,6 @@ class ProteinEntity:
         return self.__level
 
 
-
     # Sub-entity manipulation methods
     def add_child(self, child, id):
         if self.has_child_with_id(id):
@@ -44,12 +43,7 @@ class ProteinEntity:
             child.set_parent(self)
 
     def has_child_with_id(self, id):
-        try:
-            child = self.__children[id]
-        except:
-            return False
-        else:
-            return True
+        return id in self.__children.keys()
 
     def remove_child_with_id(self, id):
         if self.has_child_with_id(id):
@@ -62,12 +56,12 @@ class ProteinEntity:
 
     def parent(self):
         return self.__parent
-    
+
     def is_orphaned(self):
         return self.__parent is None
 
     def set_childrens_parents(self):
-        for child in self.__children():
+        for key, child in self.__children:
             child.set_parent(self)
 
     def set_parent(self, parent):
@@ -75,7 +69,6 @@ class ProteinEntity:
 
     def detach_parent(self):
         self.__parent = None
-
 
     def full_id(self):
         """Return the full id.
@@ -110,46 +103,42 @@ class ProteinEntity:
         return self.__full_id
 
 
-    # Hierarchy Identity Methods - some will be overwritten by subclasses
-    def structure(self):
-        try:
-            return self.parent().structure()
-        except:
-            return None
-
-    def model(self):
-        try:
-            return self.parent().model()
-        except:
-            return None
-
-    def chain(self):
-        try:
-            return self.parent().chain()
-        except:
-            return None
-
-    def residue(self):
-        try:
-            return self.parent().residue()
-        except:
-            return None
-
-
-
 
 class DisorderedProteinEntity(ProteinEntity):
     def __init__(self, level, id):
         ProteinEntity.__init__(self, level, id)
         self.__main_disorder_identifier = None # the atom/residue state with the highest occupancy
-        
+
+    def __getattr__(self, method):
+        "Forward the method call to the selected child."
+        if not hasattr(self, 'main_child'):
+            # Avoid problems with pickling
+            # Unpickling goes into infinite loop!
+            raise AttributeError
+        return getattr(self.main_child(), method)
+
+    def is_disordered(self):
+        """
+        CODE:
+        0 = not disordered
+        1 = is disordered, but as an Atom or Residue
+        2 = is disordered, but as a DisorderedAtom or DisorderedResidue
+        """
+        return 2
+
     def add_child(self, child, id):
         ProteinEntity.add_child(self, child, id)
         child.set_parent(self.parent())
+        child.set_direct_parent(self)
         child.flag_disordered()
 
     def set_main_disordered_child(self, child):
-        self.__main_disorder_identifier = child.disorder_identifier()
+        if self.has_child_with_id(child.disorder_identifier()):
+            self.__main_disorder_identifier = child.disorder_identifier()
+        else:
+            raise ProteinManipulationException( \
+                "DisorderedProteinEntity %s has no sub-entity %s " \
+                % (self, child) )
 
     def main_disorder_identifier(self):
         return self.__main_disorder_identifier
@@ -171,9 +160,11 @@ class DisorderedProteinEntity(ProteinEntity):
     def remove_child_with_id(self, disorder_id):
         child = self.children(disorder_id)
         ProteinEntity.remove_child_with_id(self, disorder_id)
+        child.detach_direct_parent()
 
         if child is not None and child.disorder_identifier() == self.__main_disorder_identifier:
             self.reset_main_disorder_identifier()
+
 
     def set_parent(self, parent):
         ProteinEntity.set_parent(self, parent)
