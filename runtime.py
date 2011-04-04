@@ -2,6 +2,11 @@
 Runtime Tests to ensure that everything is working
 """
 
+
+from Structure import Structure
+s=Structure('1JCL.pdb')
+
+'''
 from Exceptions import *
 from StructureBuilder import StructureBuilder
 from PDBInfo import PDBInfo
@@ -12,9 +17,6 @@ from Chain import Chain
 from Residue import *
 from Atom import *
 
-
-s=Structure('1JCL.pdb')
-'''
 info = PDBInfo('1JCL.pdb')
 m=Model(1)
 c=Chain(2)
@@ -36,6 +38,7 @@ p=PDBParser(PERMISSIVE=1)
 filename="pdb1fat.ent"
 s=p.get_structure('1JCL', '1JCL.pdb')
 m=s[0]
-c=m[0]
+c=m['A']
 r=c[0]
 '''
+

@@ -18,7 +18,7 @@ class PDBCoordsParser:
     Parse a PDB file and return a Structure object.
     """
 
-    def __init__(self, PERMISSIVE=1, get_header=0):
+    def __init__(self, PERMISSIVE=1):
         """
         The PDB parser call a number of standard methods in an aggregated
         StructureBuilder object. Normally this object is instanciated by the
@@ -40,7 +40,7 @@ class PDBCoordsParser:
 
     # Public methods
 
-    def get_structure(self, filename):
+    def get_models(self, filename):
         """Return the structure.
 
         Arguments:

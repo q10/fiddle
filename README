@@ -1,2 +1,2 @@
-Simple PDB Parser
-Used internally by the Head-Gordon Group
+PDB Parser / Protein Simulation Suite
+Used internally by the Head-Gordon Group for protein folding problems and entropy calculations.  Currently under intensive development.

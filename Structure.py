@@ -16,7 +16,7 @@ class Structure(ProteinEntity):
             id = os.path.basename(filename).split('.')[0]
         ProteinEntity.__init__(self, 'STRUCTURE', id)
 
-        all_models = PDBCoordsParser().get_structure(filename)
+        all_models = PDBCoordsParser().get_models(filename)
         for model in all_models:
             self.add_model(model)
 
