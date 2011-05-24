@@ -16,10 +16,12 @@ class Residue(ProteinEntity):
 
 
     def __repr__(self):
-        hetflag, resseq, icode=self.id()
+        hetflag, resseq, icode = self.id()
         full_id=(self.__name, hetflag, resseq, icode)
         return "<Residue %s het=%s resseq=%s icode=%s>" % full_id
 
+    def sequence_number(self):
+        return self.id()[1]
 
     def segid(self):
         return self.__segid
@@ -81,7 +83,10 @@ class Residue(ProteinEntity):
         """
         Returns the list atoms, treating DisorderedAtoms as one."
         """
+        if hash_key is None:
+            return list(sorted(self.children(), key=lambda atom: atom.serial_number()))
         return self.children(hash_key)
+
 
     def all_atoms(self):
         """

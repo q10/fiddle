@@ -175,4 +175,3 @@ class DisorderedProteinEntity(ProteinEntity):
         ProteinEntity.detach_parent(self)
         for sub_child in self.children():
             sub_child.detach_parent()
-

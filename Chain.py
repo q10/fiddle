@@ -22,10 +22,17 @@ class Chain(ProteinEntity):
     def remove_residue_with_id(self, id):
         self.remove_child_with_id(id)
 
+    def remove_waters(self):
+        water_residues = filter(lambda residue: residue.name() == 'HOH', self.residues())
+        for water in water_residues:
+            self.remove_child_with_id(water.id())
+
 
     # Hierarchy Identity Methods
 
     def residues(self, hash_key=None):
+        if hash_key is None:
+            return list(sorted(self.children(), key=lambda residue: residue.sequence_number()))
         return self.children(hash_key)
 
     def atoms(self):

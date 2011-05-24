@@ -20,6 +20,10 @@ class Structure(ProteinEntity):
         for model in all_models:
             self.add_model(model)
 
+        # Remove water "residues" (HOH)
+        for chain in self.chains():
+            chain.remove_waters()
+
         # Use PDBInfo to parse out and store protein meta-information
         self.__info = PDBInfo(filename)
 
