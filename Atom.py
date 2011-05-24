@@ -85,6 +85,7 @@ class Atom(ProteinEntity):
         return self.__coords[2]
     
     def set_coords(self, new_coords):
+        assert(isinstance(new_coords, numpy.ndarray) and len(new_coords) == 3)
         self.__coords = new_coords
 
     def distance_from(self, other_atom):
@@ -144,8 +145,8 @@ class Atom(ProteinEntity):
         """
         self.__disordered_flag = 1
 
-    # Public get methods for attributes
 
+    # Public get methods for attributes
     def element(self):
         return self.__element
 
