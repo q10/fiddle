@@ -9,17 +9,18 @@ class Structure(ProteinEntity):
     """
 
     def __init__(self, filename, id=None):
-        # get PDBParser to parse out information here
-
+        # Extract the protein id from file
         assert(isinstance(filename, str))
         if id is None or id is '':
             id = os.path.basename(filename).split('.')[0]
         ProteinEntity.__init__(self, 'STRUCTURE', id)
 
+        # Use new PDBCoordsParser instance to parse out and build protein protein model
         all_models = PDBCoordsParser().get_models(filename)
         for model in all_models:
             self.add_model(model)
 
+        # Use PDBInfo to parse out and store protein meta-information
         self.__info = PDBInfo(filename)
 
 
@@ -52,6 +53,7 @@ class Structure(ProteinEntity):
 
 
     # Hierarchy Identity Methods
+
     def models(self, hash_key=None):
         return self.children(hash_key)
 

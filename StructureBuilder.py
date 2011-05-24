@@ -3,9 +3,9 @@
 # license.  Please see the LICENSE file that should have been included
 # as part of this package.
 
-"""Consumer class that builds a Structure object.
-
-This is used by the PDBParser and MMCIFparser classes.
+"""
+Consumer class that builds a Structure object.
+This is used by the PDBCoordsParser classes.
 """
 
 import warnings
@@ -18,16 +18,15 @@ from Exceptions import PDBConstructionException, PDBConstructionWarning
 
 class StructureBuilder:
     """
-    Deals with contructing the Structure object. The StructureBuilder class is used
-    by the PDBParser classes to translate a file to a Structure object.
+    Deals with constructing the Structure object. The StructureBuilder class is used
+    by the PDBCoordsParser classes to translate a file to a Structure object.
     """
     def __init__(self):
         self.line_counter = 0
         self.all_models_generated = []
 
-    # METHOD TO BE CHANGED TO BOOLEAN RETURNS
     def _is_completely_disordered(self, residue):
-        "Return 1 if all atoms in the residue have a non blank altloc."
+        "Returns True if all atoms in the residue have a non blank altloc."
         for atom in residue.all_atoms():
             if atom.altloc() == " ":
                 return False
@@ -45,7 +44,7 @@ class StructureBuilder:
         o line_counter - int
         """
         assert(isinstance(line_counter, int))
-        self.line_counter=line_counter
+        self.line_counter = line_counter
 
     def init_model(self, model_id, serial_num=None):
         """Initiate a new Model object with given id.
@@ -56,7 +55,7 @@ class StructureBuilder:
         """
         assert(isinstance(model_id, int) and (isinstance(serial_num, int) or serial_num is None))
         self.all_models_generated.append(Model(model_id,serial_num))
-        self.model = self.all_models_generated[-1]
+        self.current_model = self.all_models_generated[-1]
 
     def init_chain(self, chain_id):
         """Initiate a new Chain object with given id.
@@ -64,14 +63,14 @@ class StructureBuilder:
         Arguments:
         o chain_id - string
         """
-        if self.model.has_chain_with_id(chain_id):
-            self.chain = self.model.chains(chain_id)
+        if self.current_model.has_chain_with_id(chain_id):
+            self.current_chain = self.current_model.chains(chain_id)
             warnings.warn("WARNING: Chain %s is discontinuous at line %i."
                           % (chain_id, self.line_counter),
                           PDBConstructionWarning)
         else:
-            self.chain = Chain(chain_id)
-            self.model.add_chain(self.chain)
+            self.current_chain = Chain(chain_id)
+            self.current_model.add_chain(self.current_chain)
 
     def init_seg(self, segid):
         """Flag a change in segid.
@@ -97,28 +96,29 @@ class StructureBuilder:
             # The hetero field consists of H_ + the residue name (e.g. H_FUC)
             field = "H_" + resname
         res_id=(field, resseq, icode)
-        if field==" ":
-            if self.chain.has_residue_with_id(res_id):
+
+        if field == " ":
+            if self.current_chain.has_residue_with_id(res_id):
                 # There already is a residue with the id (field, resseq, icode).
                 # This only makes sense in the case of a point mutation.
                 warnings.warn("WARNING: Residue ('%s', %i, '%s') "
                               "redefined at line %i."
                               % (field, resseq, icode, self.line_counter),
                               PDBConstructionWarning)
-                duplicate_residue=self.chain.residues(res_id)
+                duplicate_residue = self.current_chain.residues(res_id)
                 if duplicate_residue.is_disordered() == 2:
                     # The residue in the chain is a DisorderedResidue object.
                     # So just add the last Residue object.
                     if duplicate_residue.has_residue_with_name(resname):
                         # The residue was already made
-                        self.residue = duplicate_residue
+                        self.current_residue = duplicate_residue
                         duplicate_residue.set_main_disorder_identifier(resname)
                     else:
                         # Make a new residue and add it to the already
                         # present DisorderedResidue
                         new_residue = Residue(res_id, resname, self.segid)
                         duplicate_residue.add_residue(new_residue)
-                        self.residue = duplicate_residue
+                        self.current_residue = duplicate_residue
                         return
                 else:
                     # Make a new DisorderedResidue object and put all
@@ -127,21 +127,21 @@ class StructureBuilder:
                     # If not, the PDB file probably contains an error.
                     if not self._is_completely_disordered(duplicate_residue):
                         # if this exception is ignored, a residue will be missing
-                        self.residue = None
+                        self.current_residue = None
                         raise PDBConstructionException(\
                             "Blank altlocs in duplicate residue %s ('%s', %i, '%s')" \
                             % (resname, field, resseq, icode))
-                    self.chain.remove_residue_with_id(res_id)
+                    self.current_chain.remove_residue_with_id(res_id)
                     new_residue = Residue(res_id, resname, self.segid)
                     disordered_residue = DisorderedResidue(res_id)
-                    self.chain.add_residue(disordered_residue)
+                    self.current_chain.add_residue(disordered_residue)
                     disordered_residue.add_residue(duplicate_residue)
                     disordered_residue.add_residue(new_residue)
-                    self.residue = disordered_residue
+                    self.current_residue = disordered_residue
                     return
         residue = Residue(res_id, resname, self.segid)
-        self.chain.add_residue(residue)
-        self.residue = residue
+        self.current_chain.add_residue(residue)
+        self.current_residue = residue
 
     def init_atom(self, name, coord, b_factor, occupancy, altloc, fullname,
                   serial_number=None, element=None):
@@ -157,7 +157,7 @@ class StructureBuilder:
         o fullname - string, atom name including spaces, e.g. " CA "
         o element - string, upper case, e.g. "HG" for mercury
         """
-        residue = self.residue
+        residue = self.current_residue
         # if residue is None, an exception was generated during
         # the construction of the residue
         if residue is None:
@@ -179,7 +179,7 @@ class StructureBuilder:
                                   % (duplicate_fullname, fullname,
                                      self.line_counter),
                                   PDBConstructionWarning)
-        atom = self.atom = Atom(name, coord, b_factor, occupancy, altloc, fullname, serial_number, element)
+        atom = self.current_atom = Atom(name, coord, b_factor, occupancy, altloc, fullname, serial_number, element)
         if altloc!=" ":
             # The atom is disordered
             if residue.has_atom_with_id(name):
@@ -218,15 +218,12 @@ class StructureBuilder:
 
     def set_anisou(self, anisou_array):
         "Set anisotropic B factor of current Atom."
-        self.atom.set_anisou(anisou_array)
+        self.current_atom.set_anisou(anisou_array)
 
     def set_siguij(self, siguij_array):
         "Set standard deviation of anisotropic B factor of current Atom."
-        self.atom.set_siguij(siguij_array)
+        self.current_atom.set_siguij(siguij_array)
 
     def set_sigatm(self, sigatm_array):
         "Set standard deviation of atom position of current Atom."
-        self.atom.set_sigatm(sigatm_array)
-
-    def set_symmetry(self, spacegroup, cell):
-        pass
+        self.current_atom.set_sigatm(sigatm_array)

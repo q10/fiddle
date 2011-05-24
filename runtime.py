@@ -5,19 +5,8 @@ Runtime Tests to ensure that everything is working
 
 from Structure import Structure
 s=Structure('1JCL.pdb')
-
+g=sorted(s.chains()[0].residues(), key=lambda residue: residue.id()[1])
 '''
-from Exceptions import *
-from StructureBuilder import StructureBuilder
-from PDBInfo import PDBInfo
-from ProteinEntity import ProteinEntity
-from Structure import Structure
-from Model import Model
-from Chain import Chain
-from Residue import *
-from Atom import *
-
-info = PDBInfo('1JCL.pdb')
 m=Model(1)
 c=Chain(2)
 r=Residue(('a','b','c'), 'PHE', 3)

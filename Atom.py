@@ -51,7 +51,7 @@ class Atom(ProteinEntity):
         self.__siguij_array = None
         self.__sigatm_array = None
         self.__serial_number = serial_number
-        self.element = self.__derive_element(name, element)
+        self.__element = self.__derive_element(name, element)
 
         # Hash that keeps additional properties
         self.xtra={}
@@ -92,8 +92,7 @@ class Atom(ProteinEntity):
         diff = self.coords() - other_atom.coords()
         return numpy.sqrt(numpy.dot(diff, diff))
 
-
-   # set methods for other attributes
+   # Public set methods for other attributes
 
     def set_serial_number(self, n):
         self.__serial_number=n
@@ -145,16 +144,10 @@ class Atom(ProteinEntity):
         """
         self.__disordered_flag = 1
 
-    def direct_parent(self):
-        return self.__direct_parent
-
     # Public get methods for attributes
 
-    def set_direct_parent(self, new_parent):
-        self.__direct_parent = new_parent
-
-    def detach_direct_parent(self):
-        self.set_direct_parent(None)
+    def element(self):
+        return self.__element
 
     def is_disordered(self):
         "Return the disordered flag (1 if disordered, 0 otherwise)."
@@ -210,6 +203,15 @@ class Atom(ProteinEntity):
 
 
     # Hierarchy Identity Methods
+
+    def direct_parent(self):
+        return self.__direct_parent
+
+    def set_direct_parent(self, new_parent):
+        self.__direct_parent = new_parent
+
+    def detach_direct_parent(self):
+        self.set_direct_parent(None)
 
     def residue(self):
         try:
