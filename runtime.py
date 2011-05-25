@@ -6,6 +6,13 @@ from Structure import Structure
 s=Structure('1JCL.pdb')
 
 """
+
+# creating new Atom and Residue
+new_coords = numpy.array((1.23, 2.56, 3.98), 'f')
+a=Atom('CG', 12345, new_coords)
+r=Residue(123, 'PHE')
+
+
 # print all PDB metadata into a string
 s.info()
 
@@ -63,7 +70,7 @@ c.atoms()
 c.model()
 c.structure()
 
-r=Residue(('a','b','c'), 'PHE', 3)
+r=Residue(3, 'PHE')
 dr=DisorderedResidue(100)
 c.add_residue(r)
 c.add_residue(dr)
@@ -82,7 +89,6 @@ r.structure()
 # get the beta carbon of this residue
 r.atoms('CB')
 
-a=Atom('CA',(1,2,3),'BFACTOR',0.5,'ALTLOC','SERIAL NUM','C')
 r.add_atom(a)
 r.has_atom_with_id(a.id())
 r.remove_atom_with_id(a.id())
@@ -113,7 +119,7 @@ dr.main_residue()
 dr.disordered_residues()
 
 # add a new residue in
-rr=Residue(('a','b','c'), 'PHE', 4)
+rr=Residue(4, 'PHE')
 dr.add_residue(rr)
 dr.has_residue_with_name(rr.id())
 

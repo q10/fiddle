@@ -6,7 +6,7 @@ class Residue(ProteinEntity):
     Represents a residue. A Residue contains a list of
     atoms indexed numerically, i.e. residue.atoms[0]
     """
-    def __init__(self, id, name, segid):
+    def __init__(self, id, name, segid=''):
         ProteinEntity.__init__(self, 'RESIDUE', id)
         self.__direct_parent = None
 
@@ -21,7 +21,9 @@ class Residue(ProteinEntity):
         return "<Residue %s het=%s resseq=%s icode=%s>" % full_id
 
     def sequence_number(self):
-        return self.id()[1]
+        if isinstance(self.id(), tuple):
+            return self.id()[1]
+        return self.id()
 
     def segid(self):
         return self.__segid

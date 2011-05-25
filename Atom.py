@@ -35,27 +35,30 @@ class Atom(ProteinEntity):
     @type fullname: uppercase string (or None if unknown)
     """
 
-    def __init__(self, name, coords, bfactor, occupancy, altloc, fullname, serial_number, element=None):
+    def __init__(self, name, serial_number, coords, element=None):
         ProteinEntity.__init__(self, 'ATOM', name)
         self.__direct_parent = None
 
         self.__name = name      # eg. CA, spaces are removed from atom name
+        self.__serial_number = serial_number
         self.__coords = coords
-        self.__bfactor = bfactor
-        self.__occupancy = occupancy
-        self.__altloc = altloc
-        self.__full_id = None   # (structure id, model id, chain id, residue id, atom id)
-        self.__fullname = fullname
+        self.__element = self.__derive_element(name, element)
+
+        self.__bfactor = 0
+        self.__occupancy = 1.0
+        self.__altloc = ''
+        self.__fullname = ''
         self.__disordered_flag = 0
         self.__anisou_array = None
         self.__siguij_array = None
         self.__sigatm_array = None
-        self.__serial_number = serial_number
-        self.__element = self.__derive_element(name, element)
+        
 
-        # Hash that keeps additional properties
-        self.xtra={}
-
+    def pdb_atom_post_initialize(self, bfactor, occupancy, altloc, fullname):
+        self.__bfactor = bfactor
+        self.__occupancy = occupancy
+        self.__altloc = altloc
+        self.__fullname = fullname
 
     def __derive_element(self, name, element):
         if not element:
@@ -69,6 +72,7 @@ class Atom(ProteinEntity):
 
     def __repr__(self):
         return "<Atom %s>" % self.id()
+
 
     # Coordinates methods
 
@@ -92,6 +96,36 @@ class Atom(ProteinEntity):
         assert(isinstance(other_atom, Atom))
         diff = self.coords() - other_atom.coords()
         return numpy.sqrt(numpy.dot(diff, diff))
+
+    # def rotate_around_coords(self, angle, center=numpy.array((0,0,0),'f')):
+
+    def transform(self, rot, tran):
+        """
+        Apply rotation and translation to the atomic coordinates.
+
+        Example:
+                >>> rotation=rotmat(pi, Vector(1,0,0))
+                >>> translation=array((0,0,1), 'f')
+                >>> atom.transform(rotation, translation)
+
+        @param rot: A right multiplying rotation matrix
+        @type rot: 3x3 Numeric array
+
+        @param tran: the translation vector
+        @type tran: size 3 Numeric array
+        """
+        self.coord=numpy.dot(self.coord, rot)+tran
+
+    def get_vector(self):
+        """
+        Return coordinates as Vector.
+
+        @return: coordinates as 3D vector
+        @rtype: Vector
+        """
+        x,y,z=self.coord
+        return Vector(x,y,z)
+
 
    # Public set methods for other attributes
 
@@ -147,6 +181,7 @@ class Atom(ProteinEntity):
 
 
     # Public get methods for attributes
+
     def element(self):
         return self.__element
 

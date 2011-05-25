@@ -179,7 +179,9 @@ class StructureBuilder:
                                   % (duplicate_fullname, fullname,
                                      self.line_counter),
                                   PDBConstructionWarning)
-        atom = self.current_atom = Atom(name, coord, b_factor, occupancy, altloc, fullname, serial_number, element)
+        atom = self.current_atom = Atom(name, serial_number, coord, element)
+        atom.pdb_atom_post_initialize(b_factor, occupancy, altloc, fullname)
+
         if altloc!=" ":
             # The atom is disordered
             if residue.has_atom_with_id(name):
