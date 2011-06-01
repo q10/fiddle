@@ -3,13 +3,16 @@ Runtime Tests / API Documentation and Examples
 """
 
 from Structure import Structure
+from PerlGenPDBParser import PerlGenPDBParser
+
 s=Structure('1JCL.pdb')
+c=PerlGenPDBParser('sample.pdb').get_chain()
 
 """
 
 # creating new Atom and Residue
 new_coords = numpy.array((1.23, 2.56, 3.98), 'f')
-a=Atom('CG', 12345, new_coords)
+a=Atom(12345, 'CG', new_coords)
 r=Residue(123, 'PHE')
 
 

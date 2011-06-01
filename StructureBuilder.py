@@ -179,7 +179,7 @@ class StructureBuilder:
                                   % (duplicate_fullname, fullname,
                                      self.line_counter),
                                   PDBConstructionWarning)
-        atom = self.current_atom = Atom(name, serial_number, coord, element)
+        atom = self.current_atom = Atom(serial_number, name, coord, element)
         atom.pdb_atom_post_initialize(b_factor, occupancy, altloc, fullname)
 
         if altloc!=" ":

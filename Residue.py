@@ -16,9 +16,12 @@ class Residue(ProteinEntity):
 
 
     def __repr__(self):
-        hetflag, resseq, icode = self.id()
-        full_id=(self.__name, hetflag, resseq, icode)
-        return "<Residue %s het=%s resseq=%s icode=%s>" % full_id
+        if isinstance(self.id(), tuple):
+            hetflag, resseq, icode = self.id()
+            full_id=(self.__name, hetflag, resseq, icode)
+            return "<Residue %s het=%s resseq=%s icode=%s>" % full_id
+        else:
+            return "<Residue %s resseq=%s>" % (self.__name, self.id())
 
     def sequence_number(self):
         if isinstance(self.id(), tuple):

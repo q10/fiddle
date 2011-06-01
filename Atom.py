@@ -36,7 +36,7 @@ class Atom(ProteinEntity):
     @type fullname: uppercase string (or None if unknown)
     """
 
-    def __init__(self, name, serial_number, coords, element=None):
+    def __init__(self, serial_number, name, coords, element=None):
         ProteinEntity.__init__(self, 'ATOM', name)
         self.__direct_parent = None
 
