@@ -8,6 +8,7 @@ from PerlGenPDBParser import PerlGenPDBParser
 s=Structure('1JCL.pdb')
 c=PerlGenPDBParser('sample.pdb').get_chain()
 
+from pdbatm2 import *
 """
 
 # creating new Atom and Residue

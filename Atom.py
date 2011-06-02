@@ -78,7 +78,7 @@ class Atom(ProteinEntity):
     # Coordinates methods
 
     def coords(self):
-        return self.__coords
+        return numpy.array(self.__coords)
 
     def x(self):
         return self.__coords[0]
