@@ -1,0 +1,40 @@
+= fiddle
+
+* http://github.com/q10/fiddle
+
+fiddle is a PDB parser/simulation suite used internally by {QB3 Research Institute}[http://qb3.org/]'s
+Head-Gordon Group for protein folding problems and entropy calculations.  It is currently under intensive development.
+
+= Install:
+
+== Requirements:
+
+* git
+* Python >= 3.2
+
+== Instructions:
+
+Refer to {Python}[http://python.org/] for platform-specific Python installation instructions.
+
+Then pull code from GitHub:
+
+    $ git pull git@github.com:q10/fiddle.git
+
+= Usage:
+
+Simply run the following command on terminal in the code directory:
+
+    $ python runtime.py
+
+= Development:
+
+* Source hosted at {GitHub}[https://github.com/q10/fiddle].
+* Report issues on {GitHub Issues}[https://github.com/q10/fiddle/issues]
+
+Pull requests are very welcome! Make sure your patches are well tested. Please
+create a topic branch for every separate change you make.
+
+= License:
+
+fiddle is licensed under the the New BSD License and may be freely redistributed
+under the terms specified in the {LICENSE}[https://github.com/q10/fiddle/blob/master/LICENSE] file.

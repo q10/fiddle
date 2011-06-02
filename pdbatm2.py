@@ -4,6 +4,23 @@
      ##  subroutine pdbatm2  --  single atom internal to Cartesian  ##
      ##                                                             ##
      #################################################################
+
+    Parameters
+    4 atoms - the atom where we want to set the coords (atom), and the three atoms nearby (atom_a, atom_b, atom_c)
+    bond_length - length between atom and atom_a
+    angle1deg - desired atom-atom_a-atom_b angle.  Units in degrees
+    angle2deg - can either be the dihedral angle or the atom_b-angle_a-angle_c angle.  Units in degrees
+    chiral_flag - if 0, then we are trying to fit atom (labeled A in diagram) to
+        A---aa---ab---ac
+
+        Else, it is +1 or -1, in which case we are trying to fit atom to model, with left-hand or right-hand chirality
+                 ab
+                /
+               /
+      A------aa
+              \
+               \
+                ac
 """
 import warnings
 from Exceptions import PDBATM2Warning
