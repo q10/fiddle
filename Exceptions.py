@@ -14,3 +14,6 @@ class PDBConstructionWarning(Warning):
 
 class ProteinManipulationException(Exception):
     pass
+
+class PDBATM2Warning(Warning):
+    pass

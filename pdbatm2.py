@@ -1,15 +1,15 @@
 """
-
      #################################################################
      ##                                                             ##
      ##  subroutine pdbatm2  --  single atom internal to Cartesian  ##
      ##                                                             ##
      #################################################################
-
 """
+import warnings
+from Exceptions import PDBATM2Warning
 from numpy import *
 
-def pdbatm2(atom, atom_a, atom_b, atom_c, bond_length, angle1deg, angle2deg, chiral_flag):
+def pdbatm2(atom, atom_a, atom_b, atom_c, bond_length, angle1deg, angle2deg, chiral_flag, debug_flag=True):
 
 #     convert angles to radians, and get their sines and cosines
     eps = 0.00000001
@@ -41,14 +41,14 @@ def pdbatm2(atom, atom_a, atom_b, atom_c, bond_length, angle1deg, angle2deg, chi
         atom.set_coords(coords)
 
 #     general case where the second angle is a dihedral angle
-    elif chiral_flag == 0:
+    elif not chiral_flag:
         [xab, yab, zab] = (atom_a.coords() - atom_b.coords()) / atom_a.distance_from(atom_b)
         [xbc, ybc, zbc] = (atom_b.coords() - atom_c.coords()) / atom_b.distance_from(atom_c)
-        cosine, sine = xab*xbc + yab*ybc + zab*zbc, sqrt(max(1.0-cosine**2,eps))
+        cosine = xab*xbc + yab*ybc + zab*zbc
+        sine = sqrt(max(1.0-cosine**2,eps))
         
         if abs(cosine) >= 1.0:
-            write (iout,10)  i
-            #format (/,' PDBATM2  --  Undefined Dihedral', ' Angle at Atom',i6)
+            warnings.warn("%s: Undefined dihedral angle at atom %i: %s" % PDBATM2Warning, atom.serial_number(), atom)
 
         [xt, yt, zt] = array([zab*ybc - yab*zbc, xab*zbc - zab*xbc, yab*xbc - xab*ybc], 'f') / sine
         [xu, yu, zu] = yt*zab - zt*yab, zt*xab - xt*zab, xt*yab - yt*xab
@@ -69,18 +69,17 @@ def pdbatm2(atom, atom_a, atom_b, atom_c, bond_length, angle1deg, angle2deg, chi
         sine2 = max(1.0-cosine**2, eps)
 
         if abs(cosine) >= 1.0:
-            write (iout,20)  i
-            #format (/,' PDBATM2  --  Defining Atoms Colinear', ' at Atom',i6)
+            warnings.warn("%s: Defining atoms colinear at atom %i: %s" % PDBATM2Warning, atom.serial_number(), atom)
 
-        [a, b, c] = array([-cos2 - cosine*cos1, cos1 + cosine*cos2, 1.0 + a*cos2 - b*cos1], 'f') / sine2
+        [a, b] = -cos2 - cosine*cos1, cos1 + cosine*cos2
+        [a, b, c] = array([a, b, 1.0 + a*cos2 - b*cos1], 'f') / sine2
 
         if c > eps:
             c = chiral_flag * sqrt(c)
         elif c < -eps:
             [a, b, c] = array([a, b, 0.0], 'f') / sqrt((a*xac+b*xba)**2 + (a*yac+b*yba)**2 + (a*zac+b*zba)**2)
-            if debug:
-                write (iout,30)  ia
-                #format (/,' PDBATM2  --  Sum of Bond Angles', ' Too Large at Atom',i6)
+            if debug_flag:
+                warnings.warn("%s: Sum of bond angles too large at atom %i: %s" % PDBATM2Warning, atom.serial_number(), atom)
         else:
             c = 0.0
 
