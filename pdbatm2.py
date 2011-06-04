@@ -24,7 +24,7 @@
 """
 import warnings
 from Exceptions import PDBATM2Warning
-from numpy import *
+from numpy import array
 
 def pdbatm2(atom, atom_a, atom_b, atom_c, bond_length, angle1deg, angle2deg, chiral_flag, debug_flag=True):
 
@@ -71,9 +71,7 @@ def pdbatm2(atom, atom_a, atom_b, atom_c, bond_length, angle1deg, angle2deg, chi
         [xu, yu, zu] = yt*zab - zt*yab, zt*xab - xt*zab, xt*yab - yt*xab
 
         coords = atom_a.coords()
-        coords[0] += bond_length*(xu*sin1*cos2+xt*sin1*sin2-xab*cos1)
-        coords[1] += bond_length*(yu*sin1*cos2+yt*sin1*sin2-yab*cos1)
-        coords[2] += bond_length*(zu*sin1*cos2+zt*sin1*sin2-zab*cos1)
+        coords += array([xu*sin1*cos2+xt*sin1*sin2-xab*cos1, yu*sin1*cos2+yt*sin1*sin2-yab*cos1, zu*sin1*cos2+zt*sin1*sin2-zab*cos1], 'f') * bond_length
         atom.set_coords(coords)
 
 #     general case where the second angle is a bond angle

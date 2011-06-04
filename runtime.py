@@ -4,11 +4,14 @@ Runtime Tests / API Documentation and Examples
 
 from Structure import Structure
 from PerlGenPDBParser import PerlGenPDBParser
+from RotamerLibParser import RotamerLibParser
+from pdbatm2 import *
 
 s=Structure('1JCL.pdb')
 c=PerlGenPDBParser('sample.pdb').get_chain()
+r = RotamerLibParser('arg.lib')
 
-from pdbatm2 import *
+
 """
 
 # creating new Atom and Residue
