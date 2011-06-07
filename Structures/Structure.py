@@ -1,7 +1,7 @@
 import os
-from ProteinEntity import ProteinEntity
-from PDBCoordsParser import PDBCoordsParser
-from PDBInfo import PDBInfo
+from Structures.ProteinEntity import ProteinEntity
+from Structures.PDBInfo import PDBInfo
+from Parsers.PDBCoordsParser import PDBCoordsParser
 
 class Structure(ProteinEntity):
     """

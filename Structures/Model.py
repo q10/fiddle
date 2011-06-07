@@ -1,4 +1,4 @@
-from ProteinEntity import ProteinEntity
+from Structures.ProteinEntity import ProteinEntity
 
 class Model(ProteinEntity):
     """

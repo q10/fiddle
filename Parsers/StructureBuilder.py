@@ -9,11 +9,11 @@ This is used by the PDBCoordsParser classes.
 """
 
 import warnings
-from Model import Model
-from Chain import Chain
-from Residue import Residue, DisorderedResidue
-from Atom import Atom, DisorderedAtom
-from Exceptions import PDBConstructionException, PDBConstructionWarning
+from Structures.Model import Model
+from Structures.Chain import Chain
+from Structures.Residue import Residue, DisorderedResidue
+from Structures.Atom import Atom, DisorderedAtom
+from Utils.Exceptions import PDBConstructionException, PDBConstructionWarning
 
 
 class StructureBuilder:

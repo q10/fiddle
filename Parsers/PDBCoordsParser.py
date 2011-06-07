@@ -7,8 +7,8 @@
 
 import warnings
 import numpy
-from Exceptions import PDBConstructionException, PDBConstructionWarning
-from StructureBuilder import StructureBuilder
+from Utils.Exceptions import PDBConstructionException, PDBConstructionWarning
+from Parsers.StructureBuilder import StructureBuilder
 
 # If PDB spec says "COLUMNS 18-20" this means line[17:20]
 

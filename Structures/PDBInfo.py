@@ -1,4 +1,4 @@
-from PDBHeaderParser import parse_pdb_header
+from Parsers.PDBHeaderParser import parse_pdb_header
 
 class PDBInfo:
     def __init__(self, filename):

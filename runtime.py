@@ -2,14 +2,14 @@
 Runtime Tests / API Documentation and Examples
 """
 
-from Structure import Structure
-from PerlGenPDBParser import PerlGenPDBParser
-from RotamerLibParser import RotamerLibParser
+from Structures.Structure import Structure
+from Parsers.PerlGenPDBParser import PerlGenPDBParser
+from Parsers.RotamerLibParser import RotamerLibParser
 from pdbatm2 import *
 
 s=Structure('pdbs/1JCL.pdb')
 c=PerlGenPDBParser('pdbs/sample.pdb').get_chain()
-r = RotamerLibParser('rotamers/arg.lib')
+r=RotamerLibParser('rotamers/arg.lib')
 
 
 """

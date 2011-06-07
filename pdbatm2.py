@@ -23,7 +23,7 @@
                 ac
 """
 import warnings
-from Exceptions import PDBATM2Warning
+from Utils.Exceptions import PDBATM2Warning
 from numpy import array
 
 def pdbatm2(atom, atom_a, atom_b, atom_c, bond_length, angle1deg, angle2deg, chiral_flag, debug_flag=True):

@@ -1,5 +1,5 @@
-from Exceptions import ProteinManipulationException
-from ProteinEntity import ProteinEntity, DisorderedProteinEntity
+from Utils.Exceptions import ProteinManipulationException
+from Structures.ProteinEntity import ProteinEntity, DisorderedProteinEntity
 
 class Residue(ProteinEntity):
     """

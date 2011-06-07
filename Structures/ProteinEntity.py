@@ -1,4 +1,4 @@
-from Exceptions import *
+from Utils.Exceptions import *
 
 class ProteinEntity:
     def __init__(self, level, id):

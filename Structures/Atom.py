@@ -1,6 +1,6 @@
 import numpy, warnings
-from Exceptions import PDBConstructionWarning
-from ProteinEntity import ProteinEntity, DisorderedProteinEntity
+from Utils.Exceptions import PDBConstructionWarning
+from Structures.ProteinEntity import ProteinEntity, DisorderedProteinEntity
 #testing commit
 
 class Atom(ProteinEntity):
