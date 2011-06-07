@@ -17,3 +17,6 @@ class ProteinManipulationException(Exception):
 
 class PDBATM2Warning(Warning):
     pass
+
+class GROWSCESCException(Exception):
+    pass
