@@ -7,9 +7,9 @@ from PerlGenPDBParser import PerlGenPDBParser
 from RotamerLibParser import RotamerLibParser
 from pdbatm2 import *
 
-s=Structure('1JCL.pdb')
-c=PerlGenPDBParser('sample.pdb').get_chain()
-r = RotamerLibParser('arg.lib')
+s=Structure('pdbs/1JCL.pdb')
+c=PerlGenPDBParser('pdbs/sample.pdb').get_chain()
+r = RotamerLibParser('rotamers/arg.lib')
 
 
 """
