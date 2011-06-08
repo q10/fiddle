@@ -27,6 +27,7 @@ from Utils.Exceptions import PDBATM2Warning
 from numpy import array, radians, sin, cos, sqrt
 
 def pdbatm2(atom, atom_a, atom_b, atom_c, bond_length, angle1deg, angle2deg, chiral_flag, debug_flag=True):
+    assert(isinstance(debug_flag, bool))
 
 #     convert angles to radians, and get their sines and cosines
     eps = 0.00000001
