@@ -38,12 +38,12 @@ def growscesc(nn,idx,residue, withhydrogens):
 
 
         '''
-        pdbatm2(nn,idx, 1, 1.54, 109.5, cf(1), 0) # CG
-        pdbatm2(nn,idx, 2, 1.54, 109.5, cf(2), 0) # CD
-        pdbatm2(nn,idx, 3, 1.45, 109.5, cf(3), 0) # NE
-        pdbatm2(nn,idx, 4, 1.35, 120.0, cf(4), 0) # CZ
-        pdbatm2(nn,idx, 5, 1.35, 120.0, 180.0, 0) # NH1
-        pdbatm2(nn,idx, 6, 1.35, 120.0, 120.0, 1) # NH2
+        pdbatm2(, 1.54, 109.5, cf(1), 0) # CG
+        pdbatm2(, 1.54, 109.5, cf(2), 0) # CD
+        pdbatm2(, 1.45, 109.5, cf(3), 0) # NE
+        pdbatm2(, 1.35, 120.0, cf(4), 0) # CZ
+        pdbatm2(, 1.35, 120.0, 180.0, 0) # NH1
+        pdbatm2(, 1.35, 120.0, 120.0, 1) # NH2
         '''
         if withhydrogens:
             [HB2, HB3, HG2, HG3, HD2, HD3] = atoms['HB2'], atoms['HB3'], atoms['HG2'], atoms['HG3'], atoms['HD2'], atoms['HD3']
@@ -61,17 +61,17 @@ def growscesc(nn,idx,residue, withhydrogens):
             pdbatm2(IIHH2, NH2, CZ, NE, 1.02, 120.0, 120.0, 1) # 2HH2
 
             '''
-            pdbatm2(nn,idx, 7, 1.11, 109.4, 109.4, 1) # HB2
-            pdbatm2(nn,idx, 8, 1.11, 109.4, 109.4, -1) # HB3
-            pdbatm2(nn,idx, 9, 1.11, 109.4, 109.4, 1) # HG2
-            pdbatm2(nn,idx,10, 1.11, 109.4, 109.4, -1) # HG3
-            pdbatm2(nn,idx,11, 1.11, 109.4, 109.4, 1) # HD2
-            pdbatm2(nn,idx,12, 1.11, 109.4, 109.4, -1) # HD3
-            pdbatm2(nn,idx,13, 1.02, 120.0, 120.0, 1) # HE
-            pdbatm2(nn,idx,14, 1.02, 120.0, 180.0, 0) # 1HH1
-            pdbatm2(nn,idx,15, 1.02, 120.0, 120.0, 1) # 2HH1
-            pdbatm2(nn,idx,16, 1.02, 120.0, 180.0, 0) # 1HH2
-            pdbatm2(nn,idx,17, 1.02, 120.0, 120.0, 1) # 2HH2
+            pdbatm2(, 1.11, 109.4, 109.4, 1) # HB2
+            pdbatm2(, 1.11, 109.4, 109.4, -1) # HB3
+            pdbatm2(, 1.11, 109.4, 109.4, 1) # HG2
+            pdbatm2(, 1.11, 109.4, 109.4, -1) # HG3
+            pdbatm2(, 1.11, 109.4, 109.4, 1) # HD2
+            pdbatm2(, 1.11, 109.4, 109.4, -1) # HD3
+            pdbatm2(, 1.02, 120.0, 120.0, 1) # HE
+            pdbatm2(, 1.02, 120.0, 180.0, 0) # 1HH1
+            pdbatm2(, 1.02, 120.0, 120.0, 1) # 2HH1
+            pdbatm2(, 1.02, 120.0, 180.0, 0) # 1HH2
+            pdbatm2(, 1.02, 120.0, 120.0, 1) # 2HH2
             '''
     elif resname is 'ASN':
         [CG, OD1, ND2] = atoms['CG'], atoms['OD1'], atoms['ND2']
@@ -142,20 +142,20 @@ def growscesc(nn,idx,residue, withhydrogens):
 
     elif resname is 'HIS' or resname is 'HID' or resname is 'HIE':
         [CG, ND1, CD2, CD1, NE2] = atoms['CG'], atoms['ND1'], atoms['CD2'], atoms['CD1'], atoms['NE2']
-        pdbatm2(nn,idx, 1, 1.50, 109.5, cf(1), 0) # CG
-        pdbatm2(nn,idx, 2, 1.35, 126.0, cf(2), 0) # ND1
-        pdbatm2(nn,idx, 3, 1.35, 126.0, 108.0, 1) # CD2
-        pdbatm2(nn,idx, 4, 1.35, 108.0,  0.0, 0) # CD1
-        pdbatm2(nn,idx, 5, 1.35, 108.0,  0.0, 0) # NE2
+        pdbatm2(, 1.50, 109.5, cf(1), 0) # CG
+        pdbatm2(, 1.35, 126.0, cf(2), 0) # ND1
+        pdbatm2(, 1.35, 126.0, 108.0, 1) # CD2
+        pdbatm2(, 1.35, 108.0,  0.0, 0) # CD1
+        pdbatm2(, 1.35, 108.0,  0.0, 0) # NE2
         if withhydrogens:
-            pdbatm2(nn,idx, 6, 1.11, 109.4, 109.4, 1) # HB2
-            pdbatm2(nn,idx, 7, 1.11, 109.4, 109.4, -1) # HB3
+            pdbatm2(, 1.11, 109.4, 109.4, 1) # HB2
+            pdbatm2(, 1.11, 109.4, 109.4, -1) # HB3
             if resname is 'HIS' or resname is 'HID':
-                pdbatm2(nn,idx, 8, 1.02, 126.0,  0.0, 0) # HD1
-            pdbatm2(nn,idx, 9, 1.10, 126.0, 126.0, 1) # HD2
-            pdbatm2(nn,idx,10, 1.10, 126.0, 126.0, 1) # HE1
+                pdbatm2(, 1.02, 126.0,  0.0, 0) # HD1
+            pdbatm2(, 1.10, 126.0, 126.0, 1) # HD2
+            pdbatm2(, 1.10, 126.0, 126.0, 1) # HE1
             if resname is 'HIS' or resname is 'HIE':
-                pdbatm2(nn,idx,11, 1.02, 126.0, 126.0, 1) # HE2
+                pdbatm2(, 1.02, 126.0, 126.0, 1) # HE2
 
     elif resname is 'ILE':
         [CG1, CG2, CD] = atoms['CG1'], atoms['CG2'], atoms['CD']
@@ -193,146 +193,145 @@ def growscesc(nn,idx,residue, withhydrogens):
             pdbatm2(IIHD2, CD2, CG, IHD2, 1.11, 109.4, 109.4, 1) # 2HD2
             pdbatm2(IIIHD2, CD2, CG, IHD2, 1.11, 109.4, 109.4, -1) # 3HD2
 
-    elif resname is 'LYS':
-        pdbatm2(nn,idx, 1, 1.54, 109.5, cf(1), 0) # CG
-        pdbatm2(nn,idx, 2, 1.54, 109.5, cf(2), 0) # CD
-        pdbatm2(nn,idx, 3, 1.54, 109.5, cf(3), 0) # CE
-        pdbatm2(nn,idx, 4, 1.51, 109.5, cf(4), 0) # NZ
+    elif resname is 'LYS' or resname is 'LYN':  # LYN is protonated LYS
+        [CG, CD, CE, NZ] = atoms['CG'], atoms['CD'], atoms['CE'], atoms['NZ']
+        pdbatm2(CG, CB, CA, N, 1.54, 109.5, cf(1), 0) # CG
+        pdbatm2(CD, CG, CB, CA, 1.54, 109.5, cf(2), 0) # CD
+        pdbatm2(CE, CD, CG, CB, 1.54, 109.5, cf(3), 0) # CE
+        pdbatm2(NZ, CE, CD, CG, 1.51, 109.5, cf(4), 0) # NZ
         if withhydrogens:
-            pdbatm2(nn,idx, 5, 1.11, 109.4, 109.4, 1) # HB2
-            pdbatm2(nn,idx, 6, 1.11, 109.4, 109.4, -1) # HB3
-            pdbatm2(nn,idx, 7, 1.11, 109.4, 109.4, 1) # HG2
-            pdbatm2(nn,idx, 8, 1.11, 109.4, 109.4, -1) # HG3
-            pdbatm2(nn,idx, 9, 1.11, 109.4, 109.4, 1) # HD2
-            pdbatm2(nn,idx,10, 1.11, 109.4, 109.4, -1) # HD3
-            pdbatm2(nn,idx,11, 1.11, 109.4, 108.8, 1) # HE2
-            pdbatm2(nn,idx,12, 1.11, 109.4, 108.8, -1) # HE3
-            pdbatm2(nn,idx,13, 1.02, 109.5, 180.0, 0) # HZ1
-            pdbatm2(nn,idx,14, 1.02, 109.5, 109.5, 1) # HZ2
-            pdbatm2(nn,idx,15, 1.02, 109.5, 109.5, -1) # HZ3
-
-    elif resname is 'LYN':
-        pdbatm2(nn,idx, 1, 1.54, 109.5, cf(1), 0) # CG
-        pdbatm2(nn,idx, 2, 1.54, 109.5, cf(2), 0) # CD
-        pdbatm2(nn,idx, 3, 1.54, 109.5, cf(3), 0) # CE
-        pdbatm2(nn,idx, 4, 1.51, 109.5, cf(4), 0) # NZ
-        if withhydrogens:
-            pdbatm2(nn,idx, 5, 1.11, 109.4, 109.4, 1) # HB2
-            pdbatm2(nn,idx, 6, 1.11, 109.4, 109.4, -1) # HB3
-            pdbatm2(nn,idx, 7, 1.11, 109.4, 109.4, 1) # HG2
-            pdbatm2(nn,idx, 8, 1.11, 109.4, 109.4, -1) # HG3
-            pdbatm2(nn,idx, 9, 1.11, 109.4, 109.4, 1) # HD2
-            pdbatm2(nn,idx,10, 1.11, 109.4, 109.4, -1) # HD3
-            pdbatm2(nn,idx,11, 1.11, 109.4, 108.8, 1) # HE2
-            pdbatm2(nn,idx,12, 1.11, 109.4, 108.8, -1) # HE3
-            pdbatm2(nn,idx,13, 1.02, 109.5, 60.0, 0) # HZ2
-            pdbatm2(nn,idx,14, 1.02, 109.5, 300.0, 0) # HZ3
+            [HB2, HB3, HG2, HG3, HD2] = atoms['HB2'], atoms['HB3'], atoms['HG2'], atoms['HG3'], atoms['HD2']
+            [HD3, HE2, HE3, HZ2, HZ3] = atoms['HD3'], atoms['HE2'], atoms['HE3'], atoms['HZ2'], atoms['HZ3']
+            pdbatm2(HB2, CB, CA, CG, 1.11, 109.4, 109.4, 1) # HB2
+            pdbatm2(HB3, CB, CA, CG, 1.11, 109.4, 109.4, -1) # HB3
+            pdbatm2(HG2, CG, CB, CD, 1.11, 109.4, 109.4, 1) # HG2
+            pdbatm2(HG3, CG, CB, CD, 1.11, 109.4, 109.4, -1) # HG3
+            pdbatm2(HD2, CD, CG, CE, 1.11, 109.4, 109.4, 1) # HD2
+            pdbatm2(HD3, CD, CG, CE, 1.11, 109.4, 109.4, -1) # HD3
+            pdbatm2(HE2, CE, CD, NZ, 1.11, 109.4, 108.8, 1) # HE2
+            pdbatm2(HE3, CE, CD, NZ, 1.11, 109.4, 108.8, -1) # HE3
+            if resname is 'LYS':
+                HZ1 = atoms['HZ1']
+                pdbatm2(HZ1, NZ, CE, CD, 1.02, 109.5, 180.0, 0) # HZ1
+                pdbatm2(HZ2, NZ, CE, HZ1, 1.02, 109.5, 109.5, 1) # HZ2
+                pdbatm2(HZ3, NZ, CE, HZ1, 1.02, 109.5, 109.5, -1) # HZ3
+            else: # LYN case
+                pdbatm2(HZ2, NZ, CE, CD, 1.02, 109.5, 60.0, 0) # HZ2
+                pdbatm2(HZ3, NZ, CE, CD, 1.02, 109.5, 300.0, 0) # HZ3
 
     elif resname is 'MET':
-        pdbatm2(nn,idx, 1, 1.54, 109.5, cf(1), 0) # CG
-        pdbatm2(nn,idx, 2, 1.82, 109.0, cf(2), 0) # SD
-        pdbatm2(nn,idx, 3, 1.82, 96.3, cf(3), 0) # CE
+        [CG, SD, CE] = atoms['CG'], atoms['SD'], atoms['CE']
+        pdbatm2(CG, CB, CA, N, 1.54, 109.5, cf(1), 0) # CG
+        pdbatm2(SD, CG, CB, CA, 1.82, 109.0, cf(2), 0) # SD
+        pdbatm2(CE, SD, CG, CB, 1.82, 96.3, cf(3), 0) # CE
         if withhydrogens:
-            pdbatm2(nn,idx, 4, 1.11, 109.4, 109.4, 1) # HB2
-            pdbatm2(nn,idx, 5, 1.11, 109.4, 109.4, -1) # HB3
-            pdbatm2(nn,idx, 6, 1.11, 109.4, 112.0, 1) # HG2
-            pdbatm2(nn,idx, 7, 1.11, 109.4, 112.0, -1) # HG3
-            pdbatm2(nn,idx, 8, 1.11, 112.0, 180.0, 0) # HE1
-            pdbatm2(nn,idx, 9, 1.11, 112.0, 109.4, 1) # HE2
-            pdbatm2(nn,idx,10, 1.11, 112.0, 109.4, -1) # HE3
+            [HB2, HB3, HG2, HG3, HE1, HE2, HE3] = atoms['HB2'], atoms['HB3'], atoms['HG2'], atoms['HG3'], atoms['HE1'], atoms['HE2'], atoms['HE3']
+            pdbatm2(HB2, CB, CA, CG, 1.11, 109.4, 109.4, 1) # HB2
+            pdbatm2(HB3, CB, CA, CG, 1.11, 109.4, 109.4, -1) # HB3
+            pdbatm2(HG2, CG, CB, SD, 1.11, 109.4, 112.0, 1) # HG2
+            pdbatm2(HG3, CG, CB, SD, 1.11, 109.4, 112.0, -1) # HG3
+            pdbatm2(HE1, CE, SD, CG, 1.11, 112.0, 180.0, 0) # HE1
+            pdbatm2(HE2, CE, SD, HE1, 1.11, 112.0, 109.4, 1) # HE2
+            pdbatm2(HE3, CE, SD, HE1, 1.11, 112.0, 109.4, -1) # HE3
 
     elif resname is 'PHE':
-        pdbatm2(nn,idx, 1, 1.50, 109.5, cf(1), 0) # CG
-        pdbatm2(nn,idx, 2, 1.39, 120.0, cf(2), 0) # CD1
-        pdbatm2(nn,idx, 3, 1.39, 120.0, 120.0, 1) # CD2
-        pdbatm2(nn,idx, 4, 1.39, 120.0, 180.0, 0) # CE1
-        pdbatm2(nn,idx, 5, 1.39, 120.0, 180.0, 0) # CE2
-        pdbatm2(nn,idx, 6, 1.39, 120.0,  0.0, 0) # CZ
+        pdbatm2(, 1.50, 109.5, cf(1), 0) # CG
+        pdbatm2(, 1.39, 120.0, cf(2), 0) # CD1
+        pdbatm2(, 1.39, 120.0, 120.0, 1) # CD2
+        pdbatm2(, 1.39, 120.0, 180.0, 0) # CE1
+        pdbatm2(, 1.39, 120.0, 180.0, 0) # CE2
+        pdbatm2(, 1.39, 120.0,  0.0, 0) # CZ
         if withhydrogens:
-            pdbatm2(nn,idx, 7, 1.11, 109.4, 109.4, 1) # HB2
-            pdbatm2(nn,idx, 8, 1.11, 109.4, 109.4, -1) # HB3
-            pdbatm2(nn,idx, 9, 1.10, 120.0, 120.0, 1) # HD1
-            pdbatm2(nn,idx,10, 1.10, 120.0, 120.0, 1) # HD2
-            pdbatm2(nn,idx,11, 1.10, 120.0, 120.0, 1) # HE1
-            pdbatm2(nn,idx,12, 1.10, 120.0, 120.0, 1) # HE2
-            pdbatm2(nn,idx,13, 1.10, 120.0, 120.0, 1) # HZ
+            pdbatm2(, 1.11, 109.4, 109.4, 1) # HB2
+            pdbatm2(, 1.11, 109.4, 109.4, -1) # HB3
+            pdbatm2(, 1.10, 120.0, 120.0, 1) # HD1
+            pdbatm2(, 1.10, 120.0, 120.0, 1) # HD2
+            pdbatm2(, 1.10, 120.0, 120.0, 1) # HE1
+            pdbatm2(, 1.10, 120.0, 120.0, 1) # HE2
+            pdbatm2(, 1.10, 120.0, 120.0, 1) # HZ
 
     elif resname is 'PRO':
-        pdbatm2(nn,idx, 1, 1.54, 107.0, cf(1), 0) # CG
-        pdbatm2(nn,idx, 2, 1.54, 107.0, cf(2), 0) # CD
+        pdbatm2(, 1.54, 107.0, cf(1), 0) # CG
+        pdbatm2(, 1.54, 107.0, cf(2), 0) # CD
         if withhydrogens:
-            pdbatm2(nn,idx, 3, 1.11, 109.4, 109.4, 1) # HB2
-            pdbatm2(nn,idx, 4, 1.11, 109.4, 109.4, -1) # HB3
-            pdbatm2(nn,idx, 5, 1.11, 109.4, 109.4, 1) # HG2
-            pdbatm2(nn,idx, 6, 1.11, 109.4, 109.4, -1) # HG3
-            pdbatm2(nn,idx, 7, 1.11, 109.4, 109.4, 1) # HD2
-            pdbatm2(nn,idx, 8, 1.11, 109.4, 109.4, -1) # HD3
+            pdbatm2(, 1.11, 109.4, 109.4, 1) # HB2
+            pdbatm2(, 1.11, 109.4, 109.4, -1) # HB3
+            pdbatm2(, 1.11, 109.4, 109.4, 1) # HG2
+            pdbatm2(, 1.11, 109.4, 109.4, -1) # HG3
+            pdbatm2(, 1.11, 109.4, 109.4, 1) # HD2
+            pdbatm2(, 1.11, 109.4, 109.4, -1) # HD3
 
     elif resname is 'SER':
-        pdbatm2(nn,idx, 1, 1.41, 107.5, cf(1), 0) # OG
+        OG = atoms['OG']
+        pdbatm2(OG, CB, CA, N, 1.41, 107.5, cf(1), 0) # OG
         if withhydrogens:
-            pdbatm2(nn,idx, 2, 1.11, 109.4, 106.7, 1) # HB2
-            pdbatm2(nn,idx, 3, 1.11, 109.4, 106.7, -1) # HB3
-            pdbatm2(nn,idx, 4, 0.94, 106.9, 180.0, 0) # HG
+            [HB2, HB3, HG] = atoms['HB2'], atoms['HB3'], atoms['HG']
+            pdbatm2(HB2, CB, CA, OG, 1.11, 109.4, 106.7, 1) # HB2
+            pdbatm2(HB3, CB, CA, OG, 1.11, 109.4, 106.7, -1) # HB3
+            pdbatm2(HG, OG, CB, CA, 0.94, 106.9, 180.0, 0) # HG
 
     elif resname is 'THR':
-        pdbatm2(nn,idx, 1, 1.41, 107.5, cf(1), 0) # OG1
-        pdbatm2(nn,idx, 2, 1.54, 109.5, 107.7, 1) # CG2
+        [OG1, CG2] = atoms['OG1'], atoms['CG2']
+        pdbatm2(OG1, CB, CA, N, 1.41, 107.5, cf(1), 0) # OG1
+        pdbatm2(CG2, CB, CA, OG1, 1.54, 109.5, 107.7, 1) # CG2
         if withhydrogens:
-            pdbatm2(nn,idx, 3, 1.11, 109.4, 106.7, -1) # HB
-            pdbatm2(nn,idx, 4, 0.94, 106.9, 180.0, 0) # HG1
-            pdbatm2(nn,idx, 5, 1.11, 110.0, 180.0, 0) # 1HG2
-            pdbatm2(nn,idx, 6, 1.11, 110.0, 109.0, 1) # 2HG2
-            pdbatm2(nn,idx, 7, 1.11, 110.0, 109.0, -1) # 3HG2
+            [HB, HG1, IHG2, IIHG2, IIIHG2] = atoms['HB'], atoms['HG1'], atoms['1HG2'], atoms['2HG2'], atoms['3HG2']
+            pdbatm2(HB, CB, CA, OG1, 1.11, 109.4, 106.7, -1) # HB
+            pdbatm2(HG1, OG1, CB, CA, 0.94, 106.9, 180.0, 0) # HG1
+            pdbatm2(IHG2, CG2, CB, CA, 1.11, 110.0, 180.0, 0) # 1HG2
+            pdbatm2(IIHG2, CG2, CB, IHG2, 1.11, 110.0, 109.0, 1) # 2HG2
+            pdbatm2(IIIHG2, CG2, CB, IHG2, 1.11, 110.0, 109.0, -1) # 3HG2
 
     elif resname is 'TRP':
-        pdbatm2(nn,idx, 1, 1.50, 109.5, cf(1), 0) # CG
-        pdbatm2(nn,idx, 2, 1.35, 126.0, cf(2), 0) # CD1
-        pdbatm2(nn,idx, 3, 1.35, 126.0, 108.0, 1) # CD2
-        pdbatm2(nn,idx, 4, 1.35, 108.0,  0.0, 0) # NE1
-        pdbatm2(nn,idx, 5, 1.35, 108.0,  0.0, 0) # CE2
-        pdbatm2(nn,idx, 6, 1.35, 120.0, 180.0, 0) # CE3
-        pdbatm2(nn,idx, 7, 1.35, 120.0,  0.0, 0) # CZ2
-        pdbatm2(nn,idx, 8, 1.35, 120.0,  0.0, 0) # CZ3
-        pdbatm2(nn,idx, 9, 1.35, 120.0,  0.0, 0) # CH2
+        pdbatm2(, 1.50, 109.5, cf(1), 0) # CG
+        pdbatm2(, 1.35, 126.0, cf(2), 0) # CD1
+        pdbatm2(, 1.35, 126.0, 108.0, 1) # CD2
+        pdbatm2(, 1.35, 108.0,  0.0, 0) # NE1
+        pdbatm2(, 1.35, 108.0,  0.0, 0) # CE2
+        pdbatm2(, 1.35, 120.0, 180.0, 0) # CE3
+        pdbatm2(, 1.35, 120.0,  0.0, 0) # CZ2
+        pdbatm2(, 1.35, 120.0,  0.0, 0) # CZ3
+        pdbatm2(, 1.35, 120.0,  0.0, 0) # CH2
         if withhydrogens:
-            pdbatm2(nn,idx,10, 1.11, 109.4, 109.4, 1) # HB2
-            pdbatm2(nn,idx,11, 1.11, 109.4, 109.4, -1) # HB3
-            pdbatm2(nn,idx,12, 1.10, 126.0, 126.0, 1) # HD1
-            pdbatm2(nn,idx,13, 1.05, 126.0, 126.0, 1) # HE1
-            pdbatm2(nn,idx,14, 1.10, 120.0, 120.0, 1) # HE3
-            pdbatm2(nn,idx,15, 1.10, 120.0, 120.0, 1) # HZ2
-            pdbatm2(nn,idx,16, 1.10, 120.0, 120.0, 1) # HZ3
-            pdbatm2(nn,idx,17, 1.10, 120.0, 120.0, 1) # HH2
+            pdbatm2(, 1.11, 109.4, 109.4, 1) # HB2
+            pdbatm2(, 1.11, 109.4, 109.4, -1) # HB3
+            pdbatm2(, 1.10, 126.0, 126.0, 1) # HD1
+            pdbatm2(, 1.05, 126.0, 126.0, 1) # HE1
+            pdbatm2(, 1.10, 120.0, 120.0, 1) # HE3
+            pdbatm2(, 1.10, 120.0, 120.0, 1) # HZ2
+            pdbatm2(, 1.10, 120.0, 120.0, 1) # HZ3
+            pdbatm2(, 1.10, 120.0, 120.0, 1) # HH2
 
     elif resname is 'TYR':
-        pdbatm2(nn,idx, 1, 1.50, 109.5, cf(1), 0) # CG
-        pdbatm2(nn,idx, 2, 1.39, 120.0, cf(2), 0) # CD1
-        pdbatm2(nn,idx, 3, 1.39, 120.0, 120.0, 1) # CD2
-        pdbatm2(nn,idx, 4, 1.39, 120.0, 180.0, 0) # CE1
-        pdbatm2(nn,idx, 5, 1.39, 120.0, 180.0, 0) # CE2
-        pdbatm2(nn,idx, 6, 1.39, 120.0,  0.0, 0) # CZ
-        pdbatm2(nn,idx, 7, 1.36, 120.0, 120.0, 1) # OH
+        pdbatm2(, 1.50, 109.5, cf(1), 0) # CG
+        pdbatm2(, 1.39, 120.0, cf(2), 0) # CD1
+        pdbatm2(, 1.39, 120.0, 120.0, 1) # CD2
+        pdbatm2(, 1.39, 120.0, 180.0, 0) # CE1
+        pdbatm2(, 1.39, 120.0, 180.0, 0) # CE2
+        pdbatm2(, 1.39, 120.0,  0.0, 0) # CZ
+        pdbatm2(, 1.36, 120.0, 120.0, 1) # OH
         if withhydrogens:
-            pdbatm2(nn,idx, 8, 1.11, 109.4, 109.4, 1) # HB2
-            pdbatm2(nn,idx, 9, 1.11, 109.4, 109.4, -1) # HB3
-            pdbatm2(nn,idx,10, 1.10, 120.0, 120.0, 1) # HD1
-            pdbatm2(nn,idx,11, 1.10, 120.0, 120.0, 1) # HD2
-            pdbatm2(nn,idx,12, 1.10, 120.0, 120.0, 1) # HE1
-            pdbatm2(nn,idx,13, 1.10, 120.0, 120.0, 1) # HE2
-            pdbatm2(nn,idx,14, 0.97, 108.0,  0.0, 0) # HH
+            pdbatm2(, 1.11, 109.4, 109.4, 1) # HB2
+            pdbatm2(, 1.11, 109.4, 109.4, -1) # HB3
+            pdbatm2(, 1.10, 120.0, 120.0, 1) # HD1
+            pdbatm2(, 1.10, 120.0, 120.0, 1) # HD2
+            pdbatm2(, 1.10, 120.0, 120.0, 1) # HE1
+            pdbatm2(, 1.10, 120.0, 120.0, 1) # HE2
+            pdbatm2(, 0.97, 108.0,  0.0, 0) # HH
 
     elif resname is 'VAL':
-        pdbatm2(nn,idx, 1, 1.54, 109.5, cf(1), 0) # CG1
-        pdbatm2(nn,idx, 2, 1.54, 109.5, 109.5, -1) # CG2
+        [CG1, CG2] = atoms['CG1'], atoms['CG2']
+        pdbatm2(CG1, CB, CA, N, 1.54, 109.5, cf(1), 0) # CG1
+        pdbatm2(CG2, CB, CA, CG1, 1.54, 109.5, 109.5, -1) # CG2
         if withhydrogens:
-            pdbatm2(nn,idx, 3, 1.11, 109.4, 109.4, 1) # HB
-            pdbatm2(nn,idx, 4, 1.11, 109.4, 180.0, 0) # 1HG1
-            pdbatm2(nn,idx, 5, 1.11, 109.4, 109.4, 1) # 2HG1
-            pdbatm2(nn,idx, 6, 1.11, 109.4, 109.4, -1) # 3HG1
-            pdbatm2(nn,idx, 7, 1.11, 109.4, 180.0, 0) # 1HG2
-            pdbatm2(nn,idx, 8, 1.11, 109.4, 109.4, 1) # 2HG2
-            pdbatm2(nn,idx, 9, 1.11, 109.4, 109.4, -1) # 3HG2
+            [HB, IHG1, IIHG1, IIIHG1, IHG2, IIHG2, IIIHG2] = atoms['HB'], atoms['1HG1'], atoms['2HG1'], atoms['3HG1'], atoms['1HG2'], atoms['2HG2'], atoms['3HG2']
+            pdbatm2(HB, CB, CA, CG1, 1.11, 109.4, 109.4, 1) # HB
+            pdbatm2(IHG1, CG1, CB, CA, 1.11, 109.4, 180.0, 0) # 1HG1
+            pdbatm2(IIHG1, CG1, CB, IHG1, 1.11, 109.4, 109.4, 1) # 2HG1
+            pdbatm2(IIIHG1, CG1, CB, IHG1, 1.11, 109.4, 109.4, -1) # 3HG1
+            pdbatm2(IHG2, CG2, CB, CA, 1.11, 109.4, 180.0, 0) # 1HG2
+            pdbatm2(IIHG2, CG2, CB, IHG2, 1.11, 109.4, 109.4, 1) # 2HG2
+            pdbatm2(IIIHG2, CG2, CB, IHG2, 1.11, 109.4, 109.4, -1) # 3HG2
 
     else:
         raise GROWSCESCException("Residue %s is undefined." % resname)
