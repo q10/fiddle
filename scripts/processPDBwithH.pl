@@ -10,7 +10,8 @@ my $out = undef;
 my $chain = "A";
 my $altchain = "A";
 my $ligand = undef;
-GetOptions("pdb=s" => \$pdb, "out=s" => \$out, "chain=s" => \$chain, "altchain=s" => \$altchain, "ligand=s" => \$ligand);
+my $nohydrogens = undef;
+GetOptions("pdb=s" => \$pdb, "out=s" => \$out, "chain=s" => \$chain, "altchain=s" => \$altchain, "ligand=s" => \$ligand, "nohydrogens"  => \$nohydrogens);
 
 die "Usage: $0 -pdb [input pdb] -out [output pdb]\n" unless (defined $pdb && defined $out);
 $chain = uc($chain);
@@ -190,24 +191,24 @@ sub processpdb {
             if ($idx == $n) {
 #               printf "%4s%6d\n", "NTER", $idx, "\n";
                 if ($resname{$idx} eq "PRO") {
-                    unless (defined $crd{$idx}->{"H1"}) {
+                    unless (defined $crd{$idx}->{"H1"} or $nohydrogens) {
                         &buildatom($idx,  "H1", $idx,   "N", $idx,  "CA",   $idx,   "C", 1.02, 109.5,   0.0,  0);
                         &printatom($idx, "H1");
                     }
-                    unless (defined $crd{$idx}->{"H2"}) {
+                    unless (defined $crd{$idx}->{"H2"} or $nohydrogens) {
                         &buildatom($idx,  "H2", $idx,   "N", $idx,  "CA",   $idx,   "C", 1.02, 109.5, 240.0,  0);
                         &printatom($idx, "H2");
                     }
                 } else {
-                    unless (defined $crd{$idx}->{"H1"}) {
+                    unless (defined $crd{$idx}->{"H1"} or $nohydrogens) {
                         &buildatom($idx,  "H1", $idx,   "N", $idx,  "CA",   $idx,   "C", 1.02, 109.5, 180.0,  0);
                         &printatom($idx, "H1");
                     }
-                    unless (defined $crd{$idx}->{"H2"}) {
+                    unless (defined $crd{$idx}->{"H2"} or $nohydrogens) {
                         &buildatom($idx,  "H2", $idx,   "N", $idx,  "CA",   $idx,  "H1", 1.02, 109.5, 108.0,  1);
                         &printatom($idx, "H2");
                     }
-                    unless (defined $crd{$idx}->{"H3"}) {
+                    unless (defined $crd{$idx}->{"H3"} or $nohydrogens) {
                         &buildatom($idx,  "H3", $idx,   "N", $idx,  "CA",   $idx,  "H1", 1.02, 109.5, 108.0, -1);
                         &printatom($idx, "H3");
                     }
@@ -245,7 +246,7 @@ sub processpdb {
             }
         }
         switch ($resname{$idx}) {
-            case ("ALA") { @scatom = qw( CB HB1 HB2 HB3 );
+            case ("ALA") { @scatom = $nohydrogens ? qw( CB ) : qw( CB HB1 HB2 HB3 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -259,7 +260,7 @@ sub processpdb {
                                &buildatom($idx, "HB3", $idx,  "CB", $idx,  "CA", $idx,   "HB1", 1.11, 109.4, 109.4, -1);
                            }
                          }
-            case ("ARG") { @scatom = qw( CB CG CD NE CZ NH1 NH2 HB2 HB3 HG2 HG3 HD2 HD3 HE 1HH1 2HH1 1HH2 2HH2 );
+            case ("ARG") { @scatom = $nohydrogens ? qw( CB CG CD NE CZ NH1 NH2 ) : qw( CB CG CD NE CZ NH1 NH2 HB2 HB3 HG2 HG3 HD2 HD3 HE 1HH1 2HH1 1HH2 2HH2 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -315,7 +316,7 @@ sub processpdb {
                                &buildatom($idx,"2HH2", $idx, "NH2", $idx,  "CZ", $idx,  "1HH2", 1.02, 120.0, 120.0,  1);
                            }
                          }
-            case ("ASP") { @scatom = qw( CB CG OD1 OD2 HB2 HB3 );
+            case ("ASP") { @scatom = $nohydrogens ? qw( CB CG OD1 OD2 ) : qw( CB CG OD1 OD2 HB2 HB3 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,  "N",  $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -335,7 +336,7 @@ sub processpdb {
                                &buildatom($idx, "HB3", $idx,  "CB", $idx,  "CA", $idx,    "CG", 1.11, 109.4, 107.9, -1);
                            }
                          }
-            case ("ASN") { @scatom = qw( CB CG OD1 ND2 HB2 HB3 1HD2 2HD2 );
+            case ("ASN") { @scatom = $nohydrogens ? qw( CB CG OD1 ND2 ) : qw( CB CG OD1 ND2 HB2 HB3 1HD2 2HD2 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -361,7 +362,7 @@ sub processpdb {
                                &buildatom($idx,"2HD2", $idx, "ND2", $idx,  "CG", $idx,  "1HD2", 1.02, 119.0, 120.0,  1);
                            }
                          }
-            case ("CYS") { @scatom = qw( CB SG HB2 HB3 HG );
+            case ("CYS") { @scatom = $nohydrogens ? qw( CB SG ) : qw( CB SG HB2 HB3 HG );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -378,7 +379,7 @@ sub processpdb {
                                &buildatom($idx,  "HG", $idx,  "SG", $idx,  "CB", $idx,    "CA", 1.34,  96.0, 180.0,  0);
                            }
                          }
-            case ("GLN") { @scatom = qw( CB CG CD OE1 NE2 HB2 HB3 HG2 HG3 1HE2 2HE2 );
+            case ("GLN") { @scatom = $nohydrogens ? qw( CB CG CD OE1 NE2 ) : qw( CB CG CD OE1 NE2 HB2 HB3 HG2 HG3 1HE2 2HE2 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -413,7 +414,7 @@ sub processpdb {
                                &buildatom($idx,"2HE2", $idx, "NE2", $idx,  "CD", $idx,  "1HE2", 1.02, 119.0, 120.0,  1);
                            }
                          }
-            case ("GLU") { @scatom = qw( CB CG CD OE1 OE2 HB2 HB3 HG2 HG3 );
+            case ("GLU") { @scatom = $nohydrogens ? qw( CB CG CD OE1 OE2 ) : qw( CB CG CD OE1 OE2 HB2 HB3 HG2 HG3 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -442,12 +443,12 @@ sub processpdb {
                                &buildatom($idx, "HG3", $idx,  "CG", $idx,  "CB", $idx,    "CD", 1.11, 109.4, 107.9, -1);
                            }
                          }
-            case ("GLY") { @scatom = qw( HA2 );
+            case ("GLY") { @scatom = $nohydrogens ? qw( ) : qw( HA2 );
                            unless (defined $crd{$idx}->{"HA2"}) {
                                &buildatom($idx, "HA2", $idx,  "CA", $idx,   "N",   $idx,   "C", 1.11, 109.5, 107.9,  1);
                            }
                          }
-            case ("HIS") { @scatom = qw( CB CG ND1 CD2 CE1 NE2 HB2 HB3 HD1 HD2 HE1 HE2 );
+            case ("HIS") { @scatom = $nohydrogens ? qw( CB CG ND1 CD2 CE1 NE2 ) : qw( CB CG ND1 CD2 CE1 NE2 HB2 HB3 HD1 HD2 HE1 HE2 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 109.5, -1);
                            }
@@ -485,7 +486,7 @@ sub processpdb {
                                &buildatom($idx, "HE2", $idx, "NE2", $idx, "CD2", $idx,   "CE1", 1.02, 126.0, 126.0,  1);
                            }
                          }
-            case ("HID") { @scatom = qw( CB CG ND1 CD2 CE1 NE2 HB2 HB3 HD1 HD2 HE1 );
+            case ("HID") { @scatom = $nohydrogens ? qw( CB CG ND1 CD2 CE1 NE2 ) : qw( CB CG ND1 CD2 CE1 NE2 HB2 HB3 HD1 HD2 HE1 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 109.5, -1);
                            }
@@ -520,7 +521,7 @@ sub processpdb {
                                &buildatom($idx, "HE1", $idx, "CE1", $idx, "ND1", $idx,   "NE2", 1.10, 126.0, 126.0,  1);
                            }
                          }
-            case ("HIE") { @scatom = qw( CB CG ND1 CD2 CE1 NE2 HB2 HB3 HD2 HE1 HE2 );
+            case ("HIE") { @scatom = $nohydrogens ? qw( CB CG ND1 CD2 CE1 NE2 ) : qw( CB CG ND1 CD2 CE1 NE2 HB2 HB3 HD2 HE1 HE2 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 109.5, -1);
                            }
@@ -555,7 +556,7 @@ sub processpdb {
                                &buildatom($idx, "HE2", $idx, "NE2", $idx, "CD2", $idx,   "CE1", 1.02, 126.0, 126.0,  1);
                            }
                          }
-            case ("ILE") { @scatom = qw( CB CG1 CG2 CD1 HB 2HG1 3HG1 1HG2 2HG2 3HG2 1HD1 2HD1 3HD1 );
+            case ("ILE") { @scatom = $nohydrogens ? qw( CB CG1 CG2 CD1 ) : qw( CB CG1 CG2 CD1 HB 2HG1 3HG1 1HG2 2HG2 3HG2 1HD1 2HD1 3HD1 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 109.5, -1);
                            }
@@ -596,7 +597,7 @@ sub processpdb {
                                &buildatom($idx,"3HD1", $idx, "CD1", $idx, "CG1", $idx,  "1HD1", 1.11, 110.0, 109.0, -1);
                            }
                          }
-            case ("LEU") { @scatom = qw( CB CG CD1 CD2 HB2 HB3 HG 1HD1 2HD1 3HD1 1HD2 2HD2 3HD2 );
+            case ("LEU") { @scatom = $nohydrogens ? qw( CB CG CD1 CD2 HB2 HB3 ) : qw( CB CG CD1 CD2 HB2 HB3 HG 1HD1 2HD1 3HD1 1HD2 2HD2 3HD2 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -637,7 +638,7 @@ sub processpdb {
                                &buildatom($idx,"3HD2", $idx, "CD2", $idx,  "CG", $idx,  "1HD2", 1.11, 109.4, 109.4, -1);
                            }
                          }
-            case ("LYS") { @scatom = qw( CB CG CD CE NZ HB2 HB3 HG2 HG3 HD2 HD3 HE2 HE3 HZ1 HZ2 HZ3 );
+            case ("LYS") { @scatom = $nohydrogens ? qw( CB CG CD CE NZ ) : qw( CB CG CD CE NZ HB2 HB3 HG2 HG3 HD2 HD3 HE2 HE3 HZ1 HZ2 HZ3 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -687,7 +688,7 @@ sub processpdb {
                                &buildatom($idx, "HZ3", $idx,  "NZ", $idx,  "CE", $idx,   "HZ1", 1.02, 109.5, 109.5, -1);
                            }
                          }
-            case ("LYN") { @scatom = qw( CB CG CD CE NZ HB2 HB3 HG2 HG3 HD2 HD3 HE2 HE3 HZ2 HZ3 );
+            case ("LYN") { @scatom = $nohydrogens ? qw( CB CG CD CE NZ ) : qw( CB CG CD CE NZ HB2 HB3 HG2 HG3 HD2 HD3 HE2 HE3 HZ2 HZ3 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -734,7 +735,7 @@ sub processpdb {
                                &buildatom($idx, "HZ3", $idx,  "NZ", $idx,  "CE", $idx,    "CD", 1.02, 109.5, 300.0,  0);
                            }
                          }
-            case ("MET") { @scatom = qw( CB CG SD CE HB2 HB3 HG2 HG3 HE1 HE2 HE3 );
+            case ("MET") { @scatom = $nohydrogens ? qw( CB CG SD CE ) : qw( CB CG SD CE HB2 HB3 HG2 HG3 HE1 HE2 HE3 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -769,7 +770,7 @@ sub processpdb {
                                &buildatom($idx, "HE3", $idx,  "CE", $idx,  "SD", $idx,   "HE1", 1.11, 112.0, 109.4, -1);
                            }
                          }
-            case ("PHE") { @scatom = qw( CB CG CD1 CD2 CE1 CE2 CZ HB2 HB3 HD1 HD2 HE1 HE2 HZ );
+            case ("PHE") { @scatom = $nohydrogens ? qw( CB CG CD1 CD2 CE1 CE2 CZ ) : qw( CB CG CD1 CD2 CE1 CE2 CZ HB2 HB3 HD1 HD2 HE1 HE2 HZ );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -813,7 +814,7 @@ sub processpdb {
                                &buildatom($idx,  "HZ", $idx,  "CZ", $idx, "CE1", $idx,   "CE2", 1.10, 120.0, 120.0,  1);
                            }
                          }
-            case ("PRO") { @scatom = qw( CB CG CD HB2 HB3 HG2 HG3 HD2 HD3 );
+            case ("PRO") { @scatom = $nohydrogens ? qw( CB CG CD ) : qw( CB CG CD HB2 HB3 HG2 HG3 HD2 HD3 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 107.0, 109.5, -1);
                            }
@@ -842,7 +843,7 @@ sub processpdb {
                                &buildatom($idx, "HD3", $idx,  "CD", $idx,  "CG", $idx,     "N", 1.11, 109.4, 109.4, -1);
                            }
                          }
-            case ("SER") { @scatom = qw( CB OG HB2 HB3 HG );
+            case ("SER") { @scatom = $nohydrogens ? qw( CB OG ) : qw( CB OG HB2 HB3 HG );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -859,7 +860,7 @@ sub processpdb {
                                &buildatom($idx,  "HG", $idx,  "OG", $idx,  "CB", $idx,    "CA", 0.94, 106.9, 180.0,  0);
                            }
                          }
-            case ("THR") { @scatom = qw( CB OG1 CG2 HB HG1 1HG2 2HG2 3HG2 );
+            case ("THR") { @scatom = $nohydrogens ? qw( CB OG1 CG2 ) : qw( CB OG1 CG2 HB HG1 1HG2 2HG2 3HG2 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 109.5, -1);
                            }
@@ -885,7 +886,7 @@ sub processpdb {
                                &buildatom($idx,"3HG2", $idx, "CG2", $idx,  "CB", $idx,  "1HG2", 1.11, 110.0, 109.0, -1);
                            }
                          }
-            case ("TRP") { @scatom = qw( CB CG CD1 CD2 NE1 CE2 CE3 CZ2 CZ3 CH2 HB2 HB3 HD1 HE1 HE3 HZ2 HZ3 HH2);
+            case ("TRP") { @scatom = $nohydrogens ? qw( CB CG CD1 CD2 NE1 CE2 CE3 CZ2 CZ3 CH2 ) : qw( CB CG CD1 CD2 NE1 CE2 CE3 CZ2 CZ3 CH2 HB2 HB3 HD1 HE1 HE3 HZ2 HZ3 HH2);
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 109.5, -1);
                            }
@@ -941,7 +942,7 @@ sub processpdb {
                                &buildatom($idx, "HH2", $idx, "CH2", $idx, "CZ2", $idx,   "CZ3", 1.10, 120.0, 120.0,  1);
                            }
                          }
-            case ("TYR") { @scatom = qw( CB CG CD1 CD2 CE1 CE2 CZ OH HB2 HB3 HD1 HD2 HE1 HE2 HH );
+            case ("TYR") { @scatom = $nohydrogens ? qw( CB CG CD1 CD2 CE1 CE2 CZ OH ) : qw( CB CG CD1 CD2 CE1 CE2 CZ OH HB2 HB3 HD1 HD2 HE1 HE2 HH );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -988,7 +989,7 @@ sub processpdb {
                                &buildatom($idx,  "HH", $idx,  "OH", $idx,  "CZ", $idx,   "CE2", 0.97, 108.0,   0.0,  0);
                            }
                          }
-            case ("VAL") { @scatom = qw( CB CG1 CG2 HB 1HG1 2HG1 3HG1 1HG2 2HG2 3HG2 );
+            case ("VAL") { @scatom = $nohydrogens ? qw( CB CG1 CG2 ) : qw( CB CG1 CG2 HB 1HG1 2HG1 3HG1 1HG2 2HG2 3HG2 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -1020,7 +1021,7 @@ sub processpdb {
                                &buildatom($idx,"3HG2", $idx, "CG2", $idx,  "CB", $idx,  "1HG2", 1.11, 109.4, 109.4, -1);
                            }
                          }
-            case ("CYX") { @scatom = qw( CB SG HB2 HB3 );
+            case ("CYX") { @scatom = $nohydrogens ? qw( CB SG ) : qw( CB SG HB2 HB3 );
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);
                            }
@@ -1034,7 +1035,7 @@ sub processpdb {
                                &buildatom($idx, "HB3", $idx,  "CB", $idx,  "CA", $idx,    "SG", 1.11, 109.4, 112.0, -1);
                            }
                          }
-            case ("MSE") { @scatom = qw( CB CG SD CE HB2 HB3 HG2 HG3 HE1 HE2 HE3 );
+            case ("MSE") { @scatom = $nohydrogens ? qw( CB CG SD CE ) : qw( CB CG SD CE HB2 HB3 HG2 HG3 HE1 HE2 HE3 );
                            my $chi2 = my $chi3 = 180.0;
                            unless (defined $crd{$idx}->{"CB"}) {
                                &buildatom($idx,  "CB", $idx,  "CA", $idx,   "N", $idx-1,   "C", 1.54, 109.5, 107.8, -1);

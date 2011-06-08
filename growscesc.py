@@ -14,7 +14,7 @@ from Utils.Exceptions import GROWSCESCException
 def growscesc(nn,idx,residue):
 
 
-#     build side chain atoms
+    # build side chain atoms
     assert(isinstance(residue, Residue))
     resname = residue.name()
 
@@ -22,6 +22,7 @@ def growscesc(nn,idx,residue):
 
     if resname is 'ALA':
         pass
+
     elif resname is 'ARG':
         catom3(nn,idx, 1, 1.54,109.5,  cf(1), 0) # CG
         catom3(nn,idx, 2, 1.54,109.5,  cf(2), 0) # CD
