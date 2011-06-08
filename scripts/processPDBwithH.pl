@@ -229,18 +229,18 @@ sub processpdb {
            $nt = 1 if ($idx == $n);
         }
         unless ($nt || $resname{$idx} eq "PRO") {
-            unless (defined $crd{$idx}->{"H"}) {
+            unless (defined $crd{$idx}->{"H"} or $nohydrogens) {
                 &buildatom($idx,   "H", $idx,   "N", $idx,  "CA", $idx-1,   "C", 1.02, 121.0, 118.0,  1);
                 &printatom($idx, "H");
             }
         }
         if ($resname{$idx} eq "GLY") {
-            unless (defined $crd{$idx}->{"HA3"}) {
+            unless (defined $crd{$idx}->{"HA3"} or $nohydrogens) {
                 &buildatom($idx, "HA3", $idx,  "CA", $idx,   "N",   $idx,   "C", 1.11, 109.5, 107.9, -1);
                 &printatom($idx, "HA3");
             }
         } else {
-            unless (defined $crd{$idx}->{"HA"}) {
+            unless (defined $crd{$idx}->{"HA"} or $nohydrogens) {
                 &buildatom($idx,  "HA", $idx,  "CA", $idx,   "N",   $idx,   "C", 1.11, 109.5, 107.9, -1);
                 &printatom($idx, "HA");
             }

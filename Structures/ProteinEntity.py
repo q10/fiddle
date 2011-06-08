@@ -18,6 +18,9 @@ class ProteinEntity:
             except:
                 return None
 
+    def children_hash(self):
+        return self.__children
+
     def children_keys(self):
         return list(self.__children.keys())
     

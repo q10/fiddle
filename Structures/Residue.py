@@ -92,6 +92,8 @@ class Residue(ProteinEntity):
             return list(sorted(self.children(), key=lambda atom: atom.serial_number()))
         return self.children(hash_key)
 
+    def atoms_hash(self):
+        return self.children_hash();
 
     def all_atoms(self):
         """
