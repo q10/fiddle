@@ -37,10 +37,10 @@ class Atom(ProteinEntity):
     """
 
     def __init__(self, serial_number, name, coords, element=None):
-        ProteinEntity.__init__(self, 'ATOM', name)
+        ProteinEntity.__init__(self, 'ATOM', name.upper())
         self.__direct_parent = None
 
-        self.__name = name      # eg. CA, spaces are removed from atom name
+        self.__name = name.upper()      # eg. CA, spaces are removed from atom name
         self.__serial_number = serial_number
         self.__coords = coords
         self.__element = self.__derive_element(name, element)
