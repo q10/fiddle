@@ -12,7 +12,7 @@ from Structures.Residue import Residue
 from Utils.Exceptions import GROWSCESCException
 from pdbatm2 import *
 
-def growscesc(residue, torsions, withhydrogens):
+def grow_side_chain(residue, torsions, withhydrogens):
 
     # build side chain atoms
     assert(isinstance(residue, Residue))
@@ -34,16 +34,6 @@ def growscesc(residue, torsions, withhydrogens):
         pdbatm2(CZ, NE, CD, CG, 1.35, 120.0, torsions[3], 0) # CZ
         pdbatm2(NH1, CZ, NE, CD, 1.35, 120.0, 180.0, 0) # NH1
         pdbatm2(NH2, CZ, NE, NH1, 1.35, 120.0, 120.0, 1) # NH2
-
-
-        '''
-        pdbatm2(, 1.54, 109.5, torsions[0], 0) # CG
-        pdbatm2(, 1.54, 109.5, torsions[1], 0) # CD
-        pdbatm2(, 1.45, 109.5, torsions[2], 0) # NE
-        pdbatm2(, 1.35, 120.0, torsions[3], 0) # CZ
-        pdbatm2(, 1.35, 120.0, 180.0, 0) # NH1
-        pdbatm2(, 1.35, 120.0, 120.0, 1) # NH2
-        '''
         if withhydrogens:
             [HB2, HB3, HG2, HG3, HD2, HD3] = atoms['HB2'], atoms['HB3'], atoms['HG2'], atoms['HG3'], atoms['HD2'], atoms['HD3']
             [HE, IHH1, IIHH1, IHH2, IIHH2] = atoms['HE'], atoms['1HH1'], atoms['2HH1'], atoms['1HH2'], atoms['2HH2']
@@ -55,23 +45,10 @@ def growscesc(residue, torsions, withhydrogens):
             pdbatm2(HD3, CD, CG, NE, 1.11, 109.4, 109.4, -1) # HD3
             pdbatm2(HE, NE, CD, CZ, 1.02, 120.0, 120.0, 1) # HE
             pdbatm2(IHH1, NH1, CZ, NE, 1.02, 120.0, 180.0, 0) # 1HH1
-            pdbatm2(IIHH1, NH1, CZ, NE, 1.02, 120.0, 120.0, 1) # 2HH1
+            pdbatm2(IIHH1, NH1, CZ, IHH1, 1.02, 120.0, 120.0, 1) # 2HH1
             pdbatm2(IHH2, NH2, CZ, NE, 1.02, 120.0, 180.0, 0) # 1HH2
-            pdbatm2(IIHH2, NH2, CZ, NE, 1.02, 120.0, 120.0, 1) # 2HH2
+            pdbatm2(IIHH2, NH2, CZ, IHH2, 1.02, 120.0, 120.0, 1) # 2HH2
 
-            '''
-            pdbatm2(, 1.11, 109.4, 109.4, 1) # HB2
-            pdbatm2(, 1.11, 109.4, 109.4, -1) # HB3
-            pdbatm2(, 1.11, 109.4, 109.4, 1) # HG2
-            pdbatm2(, 1.11, 109.4, 109.4, -1) # HG3
-            pdbatm2(, 1.11, 109.4, 109.4, 1) # HD2
-            pdbatm2(, 1.11, 109.4, 109.4, -1) # HD3
-            pdbatm2(, 1.02, 120.0, 120.0, 1) # HE
-            pdbatm2(, 1.02, 120.0, 180.0, 0) # 1HH1
-            pdbatm2(, 1.02, 120.0, 120.0, 1) # 2HH1
-            pdbatm2(, 1.02, 120.0, 180.0, 0) # 1HH2
-            pdbatm2(, 1.02, 120.0, 120.0, 1) # 2HH2
-            '''
     elif resname is 'ASN':
         [CG, OD1, ND2] = atoms['CG'], atoms['OD1'], atoms['ND2']
         pdbatm2(CG, CB, CA, N, 1.51, 107.8, torsions[0], 0) # CG
@@ -255,7 +232,7 @@ def growscesc(residue, torsions, withhydrogens):
     elif resname is 'PRO':
         [CG, CD] = atoms['CG'], atoms['CD']
         pdbatm2(CG, CB, CA, N, .54, 107.0, torsions[0], 0) # CG
-        pdbatm2(CD, N, CA, CB, 1.54, 107.0, torsions[1], 0) # CD
+        pdbatm2(CD, CG, CB, CA, 1.54, 107.0, torsions[1], 0) # CD
         if withhydrogens:
             [HB2, HB3, HG2, HG3, HD2, HD3] = atoms['HB2'], atoms['HB3'], atoms['HG2'], atoms['HG3'], atoms['HD2'], atoms['HD3']
             pdbatm2(HB2, CB, CA, CG, 1.11, 109.4, 109.4, 1) # HB2
