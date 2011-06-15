@@ -1,6 +1,8 @@
 from Utils.Exceptions import ProteinManipulationException
 from Structures.ProteinEntity import ProteinEntity, DisorderedProteinEntity
 
+BACKBONE_ATOMS = ['N', 'CA', 'C', 'O', 'H', 'H1', 'H2', 'H3', 'HA', 'HA2', 'HA3' 'HB', 'CB', 'HB1', 'HB2', 'HB3']
+
 class Residue(ProteinEntity):
     """
     Represents a residue. A Residue contains a list of
@@ -41,6 +43,9 @@ class Residue(ProteinEntity):
     def is_disordered(self):
         "Return 1 if the residue contains disordered atoms."
         return self.__disordered
+
+    def has_hydrogens(self):
+        return any(atom.element() == 'H' for atom in self.atoms())
 
     def name(self):
         return self.__name
@@ -106,6 +111,23 @@ class Residue(ProteinEntity):
             else:
                 undisordered_atom_list.append(atom)
         return undisordered_atom_list
+
+    def side_chain_atoms(self):
+        atoms_list = self.children()
+        for atom_name in BACKBONE_ATOMS:
+            try:
+                atoms_list.remove(self.children(atom_name))
+            except:
+                pass
+        return atoms_list
+
+    def backbone_atoms(self):
+        atoms_list, atom = [], None
+        for atom_name in BACKBONE_ATOMS:
+            atom = self.children(atom_name)
+            if atom is not None:
+                atoms_list.append(atom)
+        return atoms_list
 
 
 
