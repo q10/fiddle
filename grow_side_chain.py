@@ -137,8 +137,8 @@ def grow_side_chain(residue, torsions):
     elif resname == 'ILE':
         [CG1, CG2, CD] = atoms['CG1'], atoms['CG2'], atoms['CD']
         pdbatm2(CG1, CB, CA, N, 1.54, 109.5, torsions[0], 0) # CG1
-        pdbatm2(CD, CG1, CB, CA, 1.54, 109.5, torsions[1], 0) # CD
         pdbatm2(CG2, CB, CA, CG1, 1.54, 109.5, 109.5, 1) # CG2
+        pdbatm2(CD, CG1, CB, CA, 1.54, 109.5, torsions[1], 0) # CD
         if residue.has_hydrogens():
             [HB, IIHG1, IIIHG1, IHG2, IIHG2] = atoms['HB'], atoms['2HG1'], atoms['3HG1'], atoms['1HG2'], atoms['2HG2']
             [IIIHG2, IHD1, IIHD1, IIIHD1] = atoms['3HG2'], atoms['1HD1'], atoms['2HD1'], atoms['3HD1']
