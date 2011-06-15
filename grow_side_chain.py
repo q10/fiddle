@@ -124,13 +124,13 @@ def grow_side_chain(residue, torsions):
         pdbatm2(CE1, ND1, CG, CD2, 1.35, 108.0,  0.0, 0) # CE1
         pdbatm2(NE2, CD2, CG, ND1, 1.35, 108.0,  0.0, 0) # NE2
         if residue.has_hydrogens():
-            [HB2, HB3, HD2, HE1] = atoms['HB2'], atoms['HB3'], atoms['HD2'], atoms['HE1']
-            pdbatm2(HB2, CB, CA, CG, 1.11, 109.4, 109.4, 1) # HB2
-            pdbatm2(HB3, CB, CA, CG, 1.11, 109.4, 109.4, -1) # HB3
+            pdbatm2(atoms['HB2'], CB, CA, CG, 1.11, 109.4, 109.4, 1) # HB2
+            pdbatm2(atoms['HB3'], CB, CA, CG, 1.11, 109.4, 109.4, -1) # HB3
+            if resname == 'HID' or resname == 'HIE':
+                pdbatm2(atoms['HD2'], CD2, CG, NE2, 1.10, 126.0, 126.0, 1) # HD2
+                pdbatm2(atoms['HE1'], CE1, ND1, NE2, 1.10, 126.0, 126.0, 1) # HE1
             if resname == 'HIS' or resname == 'HID':
                 pdbatm2(atoms['HD1'], ND1, CG, CD2, 1.02, 126.0,  0.0, 0) # HD1
-            pdbatm2(HD2, CD2, CG, NE2, 1.10, 126.0, 126.0, 1) # HD2
-            pdbatm2(HE1, CE1, ND1, NE2, 1.10, 126.0, 126.0, 1) # HE1
             if resname == 'HIS' or resname == 'HIE':
                 pdbatm2(atoms['HE2'], NE2, CD2, CE1, 1.02, 126.0, 126.0, 1) # HE2
 
@@ -170,7 +170,7 @@ def grow_side_chain(residue, torsions):
             pdbatm2(IIHD2, CD2, CG, IHD2, 1.11, 109.4, 109.4, 1) # 2HD2
             pdbatm2(IIIHD2, CD2, CG, IHD2, 1.11, 109.4, 109.4, -1) # 3HD2
 
-    elif resname == 'LYS' or resname == 'LYN':  # LYN is protonated LYS
+    elif resname == 'LYS' or resname == 'LYN':  # LYN is deprotonated LYS
         [CG, CD, CE, NZ] = atoms['CG'], atoms['CD'], atoms['CE'], atoms['NZ']
         pdbatm2(CG, CB, CA, N, 1.54, 109.5, torsions[0], 0) # CG
         pdbatm2(CD, CG, CB, CA, 1.54, 109.5, torsions[1], 0) # CD

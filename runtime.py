@@ -1,6 +1,7 @@
 """
 Runtime Tests / API Documentation and Examples
 """
+
 from Structures.Structure import Structure
 from Parsers.PerlGenPDBParser import PerlGenPDBParser
 from Parsers.RotamerLibParser import RotamerLibParser

@@ -33,7 +33,7 @@ def get_filtered_rotamer_chain(chain):
     for residue in chain:
         filtered_rotamer_library = deepcopy(RAW_ROTAMER_LIBRARY[residue.name()])
         for torsion_set in filtered_rotamer_library:
-            grow_side_chain(residue, torsion_set, False)
+            grow_side_chain(residue, torsion_set)
             if check_rotamer_clash_against_backbone(residue, chain):
                 filtered_rotamer_library.remove(torsion_set)
         rotamer_chain.append(filtered_rotamer_library)
