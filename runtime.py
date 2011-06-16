@@ -6,10 +6,18 @@ from Structures.Structure import Structure
 from Parsers.PerlGenPDBParser import PerlGenPDBParser
 from Parsers.RotamerLibParser import RotamerLibParser
 from pdbatm2 import *
+from RotamerFilter import *
+import profile
+import datetime
 
-s=Structure('pdbs/1JCL.pdb')
-c=PerlGenPDBParser('pdbs/sample.pdb').get_chain()
+#s=Structure('pdbs/1JCL.pdb')
+profile.run("c=PerlGenPDBParser('pdbs/sample.pdb').get_chain()")
 r=RotamerLibParser('rotamers/arg.lib')
+
+start_time = datetime.datetime.now()
+get_filtered_rotamer_chain(c)
+end_time = datetime.datetime.now()
+print(end_time - start_time)
 
 
 """

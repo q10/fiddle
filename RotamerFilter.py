@@ -17,8 +17,8 @@ def get_raw_rotamer_library():
     return rotamer_library
 
 def check_rotamer_clash_against_backbone(residue, chain):
-    for other_residue in chain:
-        if other_residue.id.sequence_number() is not residue.sequence_number():
+    for other_residue in chain.residues():
+        if other_residue.sequence_number() is not residue.sequence_number():
             for atom in residue.side_chain_atoms():
                 for other_atom in other_residue.backbone_atoms():
                     if atom.distance_from(other_atom) < ALPHA * (VDW_RADIUS[atom.element()] + VDW_RADIUS[other_atom.element()]):
@@ -30,8 +30,11 @@ RAW_ROTAMER_LIBRARY = get_raw_rotamer_library()
 
 def get_filtered_rotamer_chain(chain):
     rotamer_chain = []
-    for residue in chain:
-        filtered_rotamer_library = deepcopy(RAW_ROTAMER_LIBRARY[residue.name()])
+    for residue in chain.residues():
+        try:
+            filtered_rotamer_library = deepcopy(RAW_ROTAMER_LIBRARY[residue.name()])
+        except KeyError:
+            filtered_rotamer_library = []
         for torsion_set in filtered_rotamer_library:
             grow_side_chain(residue, torsion_set)
             if check_rotamer_clash_against_backbone(residue, chain):
