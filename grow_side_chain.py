@@ -88,7 +88,7 @@ def grow_side_chain(residue, torsions):
         pdbatm2(CG, CB, CA, N, 1.54, 109.5, torsions[0], 0) # CG
         pdbatm2(CD, CG, CB, CA, 1.51, 107.8, torsions[1], 0) # CD
         pdbatm2(OE1, CD, CG, CB, 1.22, 122.5, torsions[2], 0) # OE1
-        pdbatm2(NE2, CD, CG, OE1, 4, 1.34, 112.7, 124.0, 1) # NE2
+        pdbatm2(NE2, CD, CG, OE1, 1.34, 112.7, 124.0, 1) # NE2
         if residue.has_hydrogens():
             [HB2, HB3, HG2, HG3, IHE2, IIHE2] = atoms['HB2'], atoms['HB3'], atoms['HG2'], atoms['HG3'], atoms['1HE2'], atoms['2HE2']
             pdbatm2(HB2, CB, CA, CG, 1.11, 109.4, 109.4, 1) # HB2
@@ -135,22 +135,22 @@ def grow_side_chain(residue, torsions):
                 pdbatm2(atoms['HE2'], NE2, CD2, CE1, 1.02, 126.0, 126.0, 1) # HE2
 
     elif resname == 'ILE':
-        [CG1, CG2, CD] = atoms['CG1'], atoms['CG2'], atoms['CD']
+        [CG1, CG2, CD1] = atoms['CG1'], atoms['CG2'], atoms['CD1']
         pdbatm2(CG1, CB, CA, N, 1.54, 109.5, torsions[0], 0) # CG1
         pdbatm2(CG2, CB, CA, CG1, 1.54, 109.5, 109.5, 1) # CG2
-        pdbatm2(CD, CG1, CB, CA, 1.54, 109.5, torsions[1], 0) # CD
+        pdbatm2(CD1, CG1, CB, CA, 1.54, 109.5, torsions[1], 0) # CD1
         if residue.has_hydrogens():
             [HB, IIHG1, IIIHG1, IHG2, IIHG2] = atoms['HB'], atoms['2HG1'], atoms['3HG1'], atoms['1HG2'], atoms['2HG2']
             [IIIHG2, IHD1, IIHD1, IIIHD1] = atoms['3HG2'], atoms['1HD1'], atoms['2HD1'], atoms['3HD1']
             pdbatm2(HB, CB, CA, CG1, 1.11, 109.4, 109.4, -1) # HB
-            pdbatm2(IIHG1, CG1, CB, CD, 1.11, 109.4, 109.4, 1) # 2HG1
-            pdbatm2(IIIHG1, CG1, CB, CD, 1.11, 109.4, 109.4, -1) # 3HG1
+            pdbatm2(IIHG1, CG1, CB, CD1, 1.11, 109.4, 109.4, 1) # 2HG1
+            pdbatm2(IIIHG1, CG1, CB, CD1, 1.11, 109.4, 109.4, -1) # 3HG1
             pdbatm2(IHG2, CG2, CB, CA, 1.11, 110.0, 180.0, 0) # 1HG2
             pdbatm2(IIHG2, CG2, CB, IHG2, 1.11, 110.0, 109.0, 1) # 2HG2
             pdbatm2(IIIHG2, CG2, CB, IHG2, 1.11, 110.0, 109.0, -1) # 3HG2
-            pdbatm2(IHD1, CD, CG1, CB, 1.11, 110.0, 180.0, 0) # 1HD1
-            pdbatm2(IIHD1, CD, CG1, IHD1, 1.11, 110.0, 109.0, 1) # 2HD1
-            pdbatm2(IIIHD1, CD, CG1, IHD1, 1.11, 110.0, 109.0, -1) # 3HD1
+            pdbatm2(IHD1, CD1, CG1, CB, 1.11, 110.0, 180.0, 0) # 1HD1
+            pdbatm2(IIHD1, CD1, CG1, IHD1, 1.11, 110.0, 109.0, 1) # 2HD1
+            pdbatm2(IIIHD1, CD1, CG1, IHD1, 1.11, 110.0, 109.0, -1) # 3HD1
 
     elif resname == 'LEU':
         [CG, CD1, CD2] = atoms['CG'], atoms['CD1'], atoms['CD2']
@@ -231,7 +231,7 @@ def grow_side_chain(residue, torsions):
 
     elif resname == 'PRO':
         [CG, CD] = atoms['CG'], atoms['CD']
-        pdbatm2(CG, CB, CA, N, .54, 107.0, torsions[0], 0) # CG
+        pdbatm2(CG, CB, CA, N, 1.54, 107.0, torsions[0], 0) # CG
         pdbatm2(CD, CG, CB, CA, 1.54, 107.0, torsions[1], 0) # CD
         if residue.has_hydrogens():
             [HB2, HB3, HG2, HG3, HD2, HD3] = atoms['HB2'], atoms['HB3'], atoms['HG2'], atoms['HG3'], atoms['HD2'], atoms['HD3']
