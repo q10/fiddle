@@ -5,7 +5,7 @@ Runtime Tests / API Documentation and Examples
 from Structures.Structure import Structure
 from Parsers.PerlGenPDBParser import PerlGenPDBParser
 from Parsers.RotamerLibParser import RotamerLibParser
-from pdbatm2 import *
+from Methods import *
 from RotamerLibrary import *
 import profile
 import datetime
@@ -14,7 +14,7 @@ import datetime
 profile.run("c=PerlGenPDBParser('pdbs/sample.pdb').get_chain()")
 r=RotamerLibParser('rotamers/arg.lib')
 
-for i in range(0,35):
+for i in range(0,232):
     c.remove_residue_with_id(c.residues(i).id())
 
 start_time = datetime.datetime.now()

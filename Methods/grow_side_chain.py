@@ -10,7 +10,7 @@
 
 from Structures.Residue import Residue
 from Utils.Exceptions import GROWSCESCException
-from pdbatm2 import *
+from Methods.pdbatm2 import *
 
 def grow_side_chain(residue, torsions):
 
@@ -21,7 +21,9 @@ def grow_side_chain(residue, torsions):
     print("Current residue is %s-%s" % (resname, residue.sequence_number()))
 
     atoms = residue.atoms_hash()
-    [N, CA, CB] = atoms['N'], atoms['CA'], atoms['CB']
+    [N, CA] = atoms['N'], atoms['CA']
+    if resname != 'GLY':
+        CB = atoms['CB']
 
     if resname == 'ALA':
         pass
