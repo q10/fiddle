@@ -9,6 +9,10 @@ Atom::Atom(int tmp_id, string tmp_name, double * tmp_coords, string tmp_element)
         coords[i] = tmp_coords[i];
 }
 
+Atom::~Atom() {
+    delete [] coords;
+}
+
 ostream & Atom::operator<<(ostream & out, const Atom& atom) {
     out << "<Atom " << atom.name << ">";
     return out;
