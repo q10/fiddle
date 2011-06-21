@@ -14,11 +14,11 @@ import datetime
 profile.run("c=PerlGenPDBParser('pdbs/sample.pdb').get_chain()")
 r=RotamerLibParser('rotamers/arg.lib')
 
-for i in range(0,232):
+for i in range(0,251):
     c.remove_residue_with_id(c.residues(i).id())
 
 start_time = datetime.datetime.now()
-get_filtered_rotamer_chain(c)
+#rc = get_filtered_rotamer_chain(c)
 end_time = datetime.datetime.now()
 print(end_time - start_time)
 

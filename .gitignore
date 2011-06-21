@@ -1,6 +1,14 @@
 /.idea/
 /__pycache__/
 /*/__pycache__/
+/*/*/__pycache__/
+/nbproject/
+/fortran/
+/build/
+/dist/
+.dep.inc
+Makefile2
 *.pyc
 *.F
+*.o
 *~
