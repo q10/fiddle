@@ -8,7 +8,7 @@
 #ifndef ROTAMER_LIB_PARSER_H
 #define	ROTAMER_LIB_PARSER_H
 
-
+#pragma once
 
 #endif	/* ROTAMER_LIB_PARSER_H */
 

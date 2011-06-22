@@ -31,6 +31,7 @@
 #include <pthread.h>
 #include <getopt.h>
 
+#include "random.h"
 #include "constvars.h"
 #include "atom.h"
 #include "residue.h"

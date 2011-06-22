@@ -8,7 +8,7 @@
 #ifndef PERL_GEN_PDB_PARSER_H
 #define	PERL_GEN_PDB_PARSER_H
 
-
+#pragma once
 
 #endif	/* PERL_GEN_PDB_PARSER_H */
 

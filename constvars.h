@@ -8,7 +8,7 @@
 #ifndef CONSTVARS_H
 #define	CONSTVARS_H
 
-
+#define BUF_SIZE 1024
 
 #endif	/* CONSTVARS_H */
 

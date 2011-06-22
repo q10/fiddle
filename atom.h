@@ -8,7 +8,12 @@
 #ifndef ATOM_H
 #define	ATOM_H
 
+#pragma once
+
 using namespace std;
+
+class Chain;
+class Residue;
 
 class Atom {
 public:
@@ -17,14 +22,19 @@ public:
     double * coords;
     Residue * residue;
 
-    Atom(int tmp_id, string tmp_name, double * tmp_coords, string tmp_element);
+    Atom(int tmp_id, string & tmp_name, double * tmp_coords, string & tmp_element);
     ~Atom();
-    ostream & operator<<(ostream & out, const Atom& atom);
+    
+    // Must be friend to access private members.
+    friend ostream & operator<<(ostream & out, Atom atom);
+    friend ostream & operator<<(ostream & out, Atom * atom);
+    
     void set_coords(double * new_coords);
-    void set_residue(Residue * tmp_residue);    
+    void set_residue(Residue * tmp_residue);
     double distance_from(Atom * other_atom);
-    Residue * residue();
     Chain * chain();
 };
+
+void test_atom();
 
 #endif	/* ATOM_H */
