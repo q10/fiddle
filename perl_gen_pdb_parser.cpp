@@ -36,7 +36,7 @@ Chain * get_chain_from_perl_gen_pdb_file(string & filename) {
         current_atom = new Atom(atom_id, atom_name, coords, element);
         current_residue->add_atom(current_atom);
     }
-
+    delete coords;
     return chain;
 }
 
