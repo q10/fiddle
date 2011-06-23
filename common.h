@@ -40,6 +40,7 @@
 #include "rotamer_lib_parser.h"
 #include "perl_gen_pdb_parser.h"
 #include "pdbatm2.h"
+#include "grow_side_chain.h"
 
 using namespace std;
 
