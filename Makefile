@@ -4,7 +4,7 @@ CFLAGS2=-c
 LDFLAGS=
 SOURCES=constvars.cpp main.cpp random.cpp input.cpp output.cpp initializers.cpp energy.cpp rotation.cpp mc.cpp radial_dist.cpp sampling.cpp tests.cpp print.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=SPCE
+EXECUTABLE=fiddle
 
 all:
 	$(CC) $(CFLAGS) *.cpp -o $(EXECUTABLE)
