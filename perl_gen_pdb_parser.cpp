@@ -41,7 +41,7 @@ Chain * get_chain_from_perl_gen_pdb_file(string & filename) {
 }
 
 void test_get_chain_from_perl_gen_pdb_file() {
-    string filename = "sample.pdb";
+    string filename = "pdbs/sample.pdb";
     Chain * chain = get_chain_from_perl_gen_pdb_file(filename);
     Residue * residue = (*chain->residues)[0];
     Atom * atom = (*residue->atoms)["CG"];
