@@ -5,10 +5,9 @@
  * Created on June 21, 2011, 2:11 AM
  */
 
+#pragma once
 #ifndef RESIDUE_H
 #define	RESIDUE_H
-
-#pragma once
 
 using namespace std;
 

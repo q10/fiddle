@@ -5,6 +5,7 @@
  * Created on June 21, 2011, 2:13 AM
  */
 
+#pragma once
 #ifndef CONSTVARS_H
 #define	CONSTVARS_H
 

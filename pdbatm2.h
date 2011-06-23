@@ -5,6 +5,7 @@
  * Created on June 22, 2011, 11:00 PM
  */
 
+#pragma once
 #ifndef PDBATM2_H
 #define	PDBATM2_H
 

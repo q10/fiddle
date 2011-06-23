@@ -5,10 +5,9 @@
  * Created on June 21, 2011, 2:12 AM
  */
 
+#pragma once
 #ifndef CHAIN_H
 #define	CHAIN_H
-
-#pragma once
 
 using namespace std;
 

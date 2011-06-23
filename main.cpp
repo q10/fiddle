@@ -9,6 +9,7 @@
 
 int main(int argc, char** argv) {
     //test_atom();
-    test_residue();
+    //test_residue();
+    test_get_chain_from_perl_gen_pdb_file();
     return 0;
 }

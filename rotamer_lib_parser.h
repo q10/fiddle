@@ -5,10 +5,10 @@
  * Created on June 21, 2011, 2:12 AM
  */
 
+#pragma once
 #ifndef ROTAMER_LIB_PARSER_H
 #define	ROTAMER_LIB_PARSER_H
 
-#pragma once
 
 #endif	/* ROTAMER_LIB_PARSER_H */
 
