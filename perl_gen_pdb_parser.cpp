@@ -46,7 +46,7 @@ void test_get_chain_from_perl_gen_pdb_file() {
     Residue * residue = (*chain->residues)[0];
     Atom * atom = (*residue->atoms)["CG"];
     cout << chain << endl << residue << endl << atom
-            << " {" atom->coords[0] << " " << atom->coords[1] << " " << atom->coords[2] << "}"
+            << " {" << atom->coords[0] << " " << atom->coords[1] << " " << atom->coords[2] << "} "
             << "Element: " << atom->element << endl;
     return;
 }
