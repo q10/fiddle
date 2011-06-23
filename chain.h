@@ -18,19 +18,19 @@ class Atom;
 class Chain {
 public:
     string id;
+    map <int, Residue *> * residues;
 
-    Chain(string id);
+    Chain(string & tmp_id);
     ~Chain();
-    
-    friend ostream & operator<<(ostream & out, Chain chain);
+
     friend ostream & operator<<(ostream & out, Chain * chain);
 
-    void add_residue(Atom * atom);
+    void add_residue(Residue * residue);
     void remove_residue_with_id(int id);
-    //List Residue residues(); // wrong at the moment
     //List Atom atoms(); // wrong at the moment
 };
 
 void test_chain();
+Chain * sample_chain();
 
 #endif	/* CHAIN_H */

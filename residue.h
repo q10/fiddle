@@ -20,21 +20,23 @@ public:
     int id;
     string name;
     Chain * chain;
+    map <string, Atom *> * atoms;
+    vector< Atom * > * backbone_atoms;
+    vector< Atom * > * side_chain_atoms;
 
-    Residue(int tmp_id, string tmp_name);
+    Residue(int tmp_id, string & tmp_name);
     ~Residue();
 
-    friend ostream & operator<<(ostream & out, Residue residue);
     friend ostream & operator<<(ostream & out, Residue * residue);
-    
+
     bool has_hydrogens();
+    bool is_backbone_atom(Atom * atom);
     void add_atom(Atom * atom);
-    void remove_atom_with_id(int id);
-    //List Atom atoms(); // wrong at the moment
-    //List Atom backbone_atoms(); // wrong at the moment
-    //List Atom side_chain_atoms(); // wrong at the moment
+    void remove_atom_with_name(string & name);
+    void set_chain(Chain * tmp_chain);
 };
 
 void test_residue();
+Residue * sample_residue();
 
 #endif	/* RESIDUE_H */

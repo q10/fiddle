@@ -36,5 +36,6 @@ public:
 };
 
 void test_atom();
+Atom * sample_atom();
 
 #endif	/* ATOM_H */

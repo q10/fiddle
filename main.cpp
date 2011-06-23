@@ -8,6 +8,7 @@
 #include "common.h"
 
 int main(int argc, char** argv) {
-    test_atom();
+    //test_atom();
+    test_residue();
     return 0;
 }

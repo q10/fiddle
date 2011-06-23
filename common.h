@@ -19,6 +19,7 @@
 #include <valarray>
 #include <vector>
 #include <iterator>
+#include <map>
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
@@ -38,6 +39,7 @@
 #include "chain.h"
 #include "rotamer_lib_parser.h"
 #include "perl_gen_pdb_parser.h"
+#include "pdbatm2.h"
 
 using namespace std;
 
