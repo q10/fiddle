@@ -9,9 +9,7 @@
 #ifndef PERL_GEN_PDB_PARSER_H
 #define	PERL_GEN_PDB_PARSER_H
 
-class Chain;
-
-Chain * get_chain_from_perl_gen_pdb_file(string & filename);
+Chain * get_chain_from_perl_gen_pdb_file(std::string & filename);
 void test_get_chain_from_perl_gen_pdb_file();
 
 #endif	/* PERL_GEN_PDB_PARSER_H */

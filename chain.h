@@ -9,20 +9,17 @@
 #ifndef CHAIN_H
 #define	CHAIN_H
 
-using namespace std;
-
 class Residue;
-class Atom;
 
 class Chain {
 public:
-    string id;
-    map <int, Residue *> * residues;
+    std::string id;
+    std::map <int, Residue *> * residues;
 
-    Chain(string & tmp_id);
+    Chain(std::string & tmp_id);
     ~Chain();
 
-    friend ostream & operator<<(ostream & out, Chain * chain);
+    friend std::ostream & operator<<(std::ostream & out, Chain * chain);
 
     void add_residue(Residue * residue);
     void remove_residue_with_id(int id);

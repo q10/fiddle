@@ -9,6 +9,8 @@
 #ifndef ROTAMER_LIB_PARSER_H
 #define	ROTAMER_LIB_PARSER_H
 
+std::vector<double *> * get_rotamer_lib_from_file(std::string & filename);
+void test_rotamer_lib_parser();
 
 #endif	/* ROTAMER_LIB_PARSER_H */
 

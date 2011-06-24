@@ -10,6 +10,8 @@
 int main(int argc, char** argv) {
     //test_atom();
     //test_residue();
-    test_get_chain_from_perl_gen_pdb_file();
+    //test_get_chain_from_perl_gen_pdb_file();
+    //test_rotamer_lib_parser();
+    test_rotamer_library_creation();
     return 0;
 }

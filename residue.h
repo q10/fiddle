@@ -9,29 +9,24 @@
 #ifndef RESIDUE_H
 #define	RESIDUE_H
 
-using namespace std;
-
-class Chain;
-class Atom;
-
 class Residue {
 public:
     int id;
-    string name;
+    std::string name;
     Chain * chain;
-    map <string, Atom *> * atoms;
-    vector< Atom * > * backbone_atoms;
-    vector< Atom * > * side_chain_atoms;
+    std::map <std::string, Atom *> * atoms;
+    std::vector< Atom * > * backbone_atoms;
+    std::vector< Atom * > * side_chain_atoms;
 
-    Residue(int tmp_id, string & tmp_name);
+    Residue(int tmp_id, std::string & tmp_name);
     ~Residue();
 
-    friend ostream & operator<<(ostream & out, Residue * residue);
+    friend std::ostream & operator<<(std::ostream & out, Residue * residue);
 
     bool has_hydrogens();
     bool is_backbone_atom(Atom * atom);
     void add_atom(Atom * atom);
-    void remove_atom_with_name(string & name);
+    void remove_atom_with_name(std::string & name);
     void set_chain(Chain * tmp_chain);
 };
 

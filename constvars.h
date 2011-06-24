@@ -11,5 +11,12 @@
 
 #define BUF_SIZE 1024
 
+extern const double VDW_ALPHA;
+extern std::map <std::string, double> * VDW_RADIUS;
+extern std::map <std::string, std::vector<double *> *> * ROTAMER_LIBRARY;
+
+void initialize_constants();
+void test_rotamer_library_creation();
+
 #endif	/* CONSTVARS_H */
 
