@@ -12,4 +12,3 @@
 void grow_side_chain(Residue * residue, int torsions_index);
 
 #endif	/* GROW_SIDE_CHAIN_H */
-

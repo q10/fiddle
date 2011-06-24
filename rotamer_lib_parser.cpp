@@ -34,6 +34,6 @@ void test_rotamer_lib_parser() {
     string filename = "rotamers/val.lib";
     vector< double * > * val_rotamer_list = get_rotamer_lib_from_file(filename);
     for (int i = 0; i < val_rotamer_list->size(); i++)
-        cout << (*val_rotamer_list)[i][0] << " " << (*val_rotamer_list)[i][1] << endl;
+        cout << (*val_rotamer_list)[i][0] << endl;
     return;
 }

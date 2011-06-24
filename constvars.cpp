@@ -28,6 +28,6 @@ void test_rotamer_library_creation() {
     initialize_constants();
     vector<double *> * ile_rotamer_lib = (*ROTAMER_LIBRARY)["ILE"];
     for (int i = 0; i < ile_rotamer_lib->size(); i++)
-        cout << (*ile_rotamer_lib)[i][0] << " " << (*ile_rotamer_lib)[i][1] << " " << (*ile_rotamer_lib)[i][2] << " " << (*ile_rotamer_lib)[i][3] << endl;
+        cout << (*ile_rotamer_lib)[i][0] << " " << (*ile_rotamer_lib)[i][1] << endl;
     return;
 }

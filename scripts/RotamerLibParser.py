@@ -23,12 +23,21 @@ class RotamerLibParser:
         self.__num_columns = 0
         self.__all_torsions = []
         self._parse_rotamers(open(filename).readlines())
+        self.__filename = filename
 
     def residue_name(self):
         return str(self.__residue_name)
 
     def torsions(self):
         return self.__all_torsions
+
+    def save_to_file(self):
+        file = open(self.__filename + '2','w')
+        size = len(self.__all_torsions[0])
+        for torsion in self.__all_torsions:
+            for i in range(size):
+                file.write("%f    " % torsion[i])
+            file.write("\n")
 
     def _parse_rotamers(self, lines):
         self.__num_columns = len(lines[0].split())
@@ -47,3 +56,8 @@ class RotamerLibParser:
             for cartesian_product in product(*torsions):
                 assert(len(cartesian_product) == self.__num_columns)
                 self.__all_torsions.append(cartesian_product)
+
+def run_script():
+    for filename in os.listdir("../rotamers"):
+        r = RotamerLibParser("../rotamers/" + filename)
+        r.save_to_file()

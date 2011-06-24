@@ -6,8 +6,8 @@ void grow_side_chain(Residue * residue, int torsions_index) {
 
     string resname = residue->name;
     map <string, Atom *> * atoms = (residue->atoms);
-    vector<double *> * rotamer_lib = (*ROTAMER_LIBRARY)[resname];
-    double * torsions = (*rotamer_lib)[torsions_index];
+    vector<double *> * tmp_rotamer_lib = (*ROTAMER_LIBRARY)[resname];
+    double * torsions = (*tmp_rotamer_lib)[torsions_index];
 
     Atom *N = (*atoms)["N"], *CA = (*atoms)["CA"], *CB;
     if (resname.compare("GLY") != 0)
