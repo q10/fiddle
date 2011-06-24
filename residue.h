@@ -17,6 +17,7 @@ public:
     std::map <std::string, Atom *> * atoms;
     std::vector< Atom * > * backbone_atoms;
     std::vector< Atom * > * side_chain_atoms;
+    std::vector< int > * non_clashing_rotamer_ids;
 
     Residue(int tmp_id, std::string & tmp_name);
     ~Residue();

@@ -1,11 +1,14 @@
 #include "common.h"
 
-void grow_side_chain(Residue * residue, double * torsions) {
+void grow_side_chain(Residue * residue, int torsions_index) {
     // build side chain atoms
     cout << "Current residue is " << residue << endl;
 
     string resname = residue->name;
     map <string, Atom *> * atoms = (residue->atoms);
+    vector<double *> * rotamer_lib = (*ROTAMER_LIBRARY)[resname];
+    double * torsions = (*rotamer_lib)[torsions_index];
+
     Atom *N = (*atoms)["N"], *CA = (*atoms)["CA"], *CB;
     if (resname.compare("GLY") != 0)
         CB = (*atoms)["CB"];
@@ -122,8 +125,7 @@ void grow_side_chain(Residue * residue, double * torsions) {
             if (resname.compare("HIS") == 0 or resname.compare("HIE") == 0)
                 pdbatm2((*atoms)["HE2"], NE2, CD2, CE1, 1.02, 126.0, 126.0, 1); // HE2
         }
-    }
-    else if (resname.compare("ILE") == 0) {
+    } else if (resname.compare("ILE") == 0) {
         Atom *CG1 = (*atoms)["CG1"], *CG2 = (*atoms)["CG2"], *CD1 = (*atoms)["CD1"];
         pdbatm2(CG1, CB, CA, N, 1.54, 109.5, torsions[0], 0); // CG1
         pdbatm2(CG2, CB, CA, CG1, 1.54, 109.5, 109.5, 1); // CG2

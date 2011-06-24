@@ -37,10 +37,11 @@
 #include "atom.h"
 #include "residue.h"
 #include "chain.h"
-#include "rotamer_lib_parser.h"
-#include "perl_gen_pdb_parser.h"
 #include "pdbatm2.h"
 #include "grow_side_chain.h"
+#include "rotamer_lib_parser.h"
+#include "perl_gen_pdb_parser.h"
+#include "backbone_clash_checker.h"
 
 using namespace std;
 

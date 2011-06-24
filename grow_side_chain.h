@@ -9,7 +9,7 @@
 #ifndef GROW_SIDE_CHAIN_H
 #define	GROW_SIDE_CHAIN_H
 
-void grow_side_chain(Residue * residue, double * torsions);
+void grow_side_chain(Residue * residue, int torsions_index);
 
 #endif	/* GROW_SIDE_CHAIN_H */
 

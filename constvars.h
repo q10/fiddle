@@ -19,4 +19,3 @@ void initialize_constants();
 void test_rotamer_library_creation();
 
 #endif	/* CONSTVARS_H */
-

@@ -19,7 +19,6 @@ vector<double *> * get_rotamer_lib_from_file(string & filename) {
     }
 
     int size = tmp_rotamer_list[0].size();
-
     for (int j = 0; j < tmp_rotamer_list.size(); j++) {
         ASSERT(tmp_rotamer_list[j].size() == size, "Not the same number of torsion angles per line in .lib file.");
         coords = new double [size];

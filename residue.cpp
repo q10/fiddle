@@ -11,12 +11,14 @@ Residue::Residue(int tmp_id, string & tmp_name) {
     atoms = new map <string, Atom *>;
     backbone_atoms = new vector< Atom * >;
     side_chain_atoms = new vector< Atom * >;
+    non_clashing_rotamer_ids = new vector< int >;
 }
 
 Residue::~Residue() {
     delete atoms;
     delete backbone_atoms;
     delete side_chain_atoms;
+    delete non_clashing_rotamer_ids;
 }
 
 bool Residue::has_hydrogens() {
