@@ -2,7 +2,7 @@
 
 * http://github.com/q10/fiddle
 
-fiddle is a PDB parser/simulation suite used internally by {QB3 Research Institute}[http://qb3.org/]\'s
+fiddle is a PDB parser/simulation suite used internally by {QB3 Research Institute}[http://qb3.org/]'s
 Head-Gordon Group for protein folding problems and entropy calculations.  It is currently under intensive development.
 
 = Install:
@@ -11,6 +11,8 @@ Head-Gordon Group for protein folding problems and entropy calculations.  It is 
 
 * git
 * Python >= 3.2
+* g++
+* make
 
 == Instructions:
 
