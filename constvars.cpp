@@ -12,6 +12,12 @@ void initialize_constants() {
     (*VDW_RADIUS)["O"] = 1.52;
     (*VDW_RADIUS)["S"] = 1.80;
 
+    initialize_rotamer_library();
+
+    return;
+}
+
+void initialize_rotamer_library() {
     string filename, residue, almost_all_residues [] = {"arg", "asn", "asp", "cys", "gln", "glu", "his", "ile", "leu", "lys", "met", "phe", "pro", "ser", "thr", "trp", "tyr", "val"};
     (*ROTAMER_LIBRARY)["GLY"] = (*ROTAMER_LIBRARY)["ALA"] = NULL;
     for (int i = 0; i < 18; i++) {
@@ -20,7 +26,6 @@ void initialize_constants() {
         transform(residue.begin(), residue.end(), residue.begin(), ::toupper); // convert to upper case
         (*ROTAMER_LIBRARY)[residue] = get_rotamer_lib_from_file(filename);
     }
-
     return;
 }
 

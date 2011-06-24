@@ -9,7 +9,7 @@ void grow_side_chain(Residue * residue, int torsions_index) {
     vector<double *> * tmp_rotamer_lib = (*ROTAMER_LIBRARY)[resname];
     double * torsions = (*tmp_rotamer_lib)[torsions_index];
 
-    Atom *N = (*atoms)["N"], *CA = (*atoms)["CA"], *CB;
+    Atom *N = (*atoms)["N"], *CA = (*atoms)["CA"], *CB = NULL;
     if (resname.compare("GLY") != 0)
         CB = (*atoms)["CB"];
 
@@ -315,5 +315,12 @@ void grow_side_chain(Residue * residue, int torsions_index) {
     } else
         ASSERT(false, "Residue " + STRING(resname) + " is undefined.\n");
 
+    return;
+}
+
+void test_grow_side_chain() {
+    initialize_constants();
+    Residue * residue = sample_residue();
+    grow_side_chain(residue, 1);
     return;
 }

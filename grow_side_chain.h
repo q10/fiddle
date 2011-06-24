@@ -10,5 +10,6 @@
 #define	GROW_SIDE_CHAIN_H
 
 void grow_side_chain(Residue * residue, int torsions_index);
+void test_grow_side_chain();
 
 #endif	/* GROW_SIDE_CHAIN_H */

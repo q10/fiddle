@@ -1,4 +1,4 @@
-from Structures.ProteinEntity import ProteinEntity
+from python.Structures.ProteinEntity import ProteinEntity
 
 class Chain(ProteinEntity):
     """
