@@ -51,7 +51,7 @@ void test_initialize_rotamer_for_residue() {
     initialize_constants();
     string filename = "pdbs/sample.pdb";
     Chain * chain = get_chain_from_perl_gen_pdb_file(filename);
-    Residue * residue = (*chain->residues)[1];
+    Residue * residue = (*chain->residues)[5];
 
     cout << "Number of valid rotamers before initialize: " << residue->non_clashing_rotamer_ids->size() << endl;
     initialize_rotamer_for_residue(residue);
@@ -60,7 +60,7 @@ void test_initialize_rotamer_for_residue() {
     return;
 }
 
-void test_initialize_rotamer_for_chain() {
+void test_initialize_rotamers_for_chain() {
     initialize_constants();
     string filename = "pdbs/sample.pdb";
     Chain * chain = get_chain_from_perl_gen_pdb_file(filename);

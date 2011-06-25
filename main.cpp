@@ -14,7 +14,8 @@ int main(int argc, char** argv) {
     //test_rotamer_lib_parser();
     //test_rotamer_library_creation();
     //test_grow_side_chain();
-    test_initialize_rotamer_for_residue();
+    //test_initialize_rotamer_for_residue();
+    test_initialize_rotamers_for_chain();
     
     return 0;
 }

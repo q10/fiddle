@@ -13,6 +13,6 @@ void initialize_rotamers_for_each_residue_in_chain(Chain * chain);
 void initialize_rotamer_for_residue(Residue * residue);
 bool check_rotamer_clash_against_backbone(Residue * residue);
 void test_initialize_rotamer_for_residue();
-void test_initialize_rotamer_for_chain();
+void test_initialize_rotamers_for_chain();
 
 #endif	/* BACKBONE_CLASH_CHECKER_H */
