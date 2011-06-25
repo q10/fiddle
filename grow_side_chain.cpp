@@ -5,7 +5,7 @@ void grow_side_chain(Residue * residue, int torsions_index) {
     cout << "Current residue is " << residue << endl;
 
     string resname = residue->name;
-    map <string, Atom *> * atoms = (residue->atoms);
+    map <string, Atom *> * atoms = residue->atoms;
     vector<double *> * tmp_rotamer_lib = (*ROTAMER_LIBRARY)[resname];
     double * torsions = (*tmp_rotamer_lib)[torsions_index];
 
@@ -320,7 +320,10 @@ void grow_side_chain(Residue * residue, int torsions_index) {
 
 void test_grow_side_chain() {
     initialize_constants();
-    Residue * residue = sample_residue();
+    string filename = "pdbs/sample.pdb";
+    Chain * chain = get_chain_from_perl_gen_pdb_file(filename);
+    Residue * residue = (*chain->residues)[1];
+
     grow_side_chain(residue, 1);
     return;
 }

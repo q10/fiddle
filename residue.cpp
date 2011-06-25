@@ -82,6 +82,7 @@ void test_residue() {
 }
 
 Residue * sample_residue() {
+    // WARNING - NO ATOMS INCLUDED IN THIS SAMPLE RESIDUE; MAY CAUSE SEG FAULTS IF TRYING TO LOOK FOR ATOMS
     string name = "TYR";
     Residue * residue = new Residue(42, name);
     return residue;

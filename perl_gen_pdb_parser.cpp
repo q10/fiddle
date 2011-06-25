@@ -15,12 +15,12 @@ Chain * get_chain_from_perl_gen_pdb_file(string & filename) {
     while (getline(filestream, line)) {
         element = line[13];
         istringstream iss(line);
-        iss >> line_key;        // get ATOM
-        iss >> atom_id;         // get atom id
-        iss >> atom_name;       // get atom name (ex CA)
-        iss >> resname;         // get residue name (ex HIS)
-        iss >> chain_id;        // get chain id
-        iss >> residue_id;      // get residue id
+        iss >> line_key; // get ATOM
+        iss >> atom_id; // get atom id
+        iss >> atom_name; // get atom name (ex CA)
+        iss >> resname; // get residue name (ex HIS)
+        iss >> chain_id; // get chain id
+        iss >> residue_id; // get residue id
         iss >> coords[0];
         iss >> coords[1];
         iss >> coords[2];
@@ -43,10 +43,17 @@ Chain * get_chain_from_perl_gen_pdb_file(string & filename) {
 void test_get_chain_from_perl_gen_pdb_file() {
     string filename = "pdbs/sample.pdb";
     Chain * chain = get_chain_from_perl_gen_pdb_file(filename);
-    Residue * residue = (*chain->residues)[0];
+    Residue * residue = (*chain->residues)[1];
+
+    map <string, Atom *> * atoms = residue->atoms;
+
     Atom * atom = (*residue->atoms)["CG"];
+    Atom * btom = (*atoms)["N"];
+
     cout << chain << endl << residue << endl << atom
             << " {" << atom->coords[0] << " " << atom->coords[1] << " " << atom->coords[2] << "} "
             << "Element: " << atom->element << endl;
+    cout << btom << " {" << btom->coords[0] << " " << btom->coords[1] << " " << btom->coords[2] << "} "
+            << "Element: " << btom->element << endl;
     return;
 }

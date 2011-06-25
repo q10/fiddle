@@ -58,8 +58,8 @@ void pdbatm2(Atom * atom, Atom * atom_a, Atom * atom_b, Atom * atom_c, double bo
             cosg = yab / sinb;
             sing = xab / sinb;
         }
-        xtmp = bond_length*sin1;
-        ztmp = rab - bond_length*cos1;
+        xtmp = bond_length * sin1;
+        ztmp = rab - bond_length * cos1;
 
         for (int i = 0; i < 3; i++)
             new_coords[i] = atom_b->coords[i];

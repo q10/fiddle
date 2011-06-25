@@ -13,6 +13,8 @@ int main(int argc, char** argv) {
     //test_get_chain_from_perl_gen_pdb_file();
     //test_rotamer_lib_parser();
     //test_rotamer_library_creation();
-    test_grow_side_chain();
+    //test_grow_side_chain();
+    test_initialize_rotamer_for_residue();
+    
     return 0;
 }
