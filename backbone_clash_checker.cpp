@@ -1,6 +1,6 @@
 #include "common.h"
 
-void initialize_rotamers_for_each_residue(Chain * chain) {
+void initialize_rotamers_for_each_residue_in_chain(Chain * chain) {
     for (map <int, Residue *>::iterator it = chain->residues->begin(); it != chain->residues->end(); it++)
         initialize_rotamer_for_residue(it->second);
     return;
@@ -53,9 +53,17 @@ void test_initialize_rotamer_for_residue() {
     Chain * chain = get_chain_from_perl_gen_pdb_file(filename);
     Residue * residue = (*chain->residues)[1];
 
-    cout << residue->non_clashing_rotamer_ids->size() << endl;
+    cout << "Number of valid rotamers before initialize: " << residue->non_clashing_rotamer_ids->size() << endl;
     initialize_rotamer_for_residue(residue);
-    cout << residue->non_clashing_rotamer_ids->size() << endl;
+    cout << "Number of valid rotamers after initialize: " << residue->non_clashing_rotamer_ids->size() << endl;
 
+    return;
+}
+
+void test_initialize_rotamer_for_residue() {
+    initialize_constants();
+    string filename = "pdbs/sample.pdb";
+    Chain * chain = get_chain_from_perl_gen_pdb_file(filename);
+    initialize_rotamers_for_each_residue_in_chain(chain);
     return;
 }
