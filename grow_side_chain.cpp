@@ -2,7 +2,7 @@
 
 void grow_side_chain(Residue * residue, int torsions_index) {
     // build side chain atoms
-    cout << "Current residue is " << residue << endl;
+    //cerr << "Current residue is " << residue << endl;
 
     string resname = residue->name;
     map <string, Atom *> * atoms = residue->atoms;

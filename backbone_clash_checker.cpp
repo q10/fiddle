@@ -7,11 +7,13 @@ void initialize_rotamers_for_each_residue(Chain * chain) {
 }
 
 void initialize_rotamer_for_residue(Residue * residue) {
+    residue->non_clashing_rotamer_ids->clear();
     for (int torsions_index = 0; torsions_index < (*ROTAMER_LIBRARY)[residue->name]->size(); torsions_index++) {
         grow_side_chain(residue, torsions_index);
         if (!check_rotamer_clash_against_backbone(residue))
             residue->non_clashing_rotamer_ids->push_back(torsions_index);
     }
+    cerr << "Finished initializing rotamer for " << residue << endl;
     return;
 }
 
