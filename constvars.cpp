@@ -19,7 +19,8 @@ void initialize_constants() {
 
 void initialize_rotamer_library() {
     string filename, residue, almost_all_residues [] = {"arg", "asn", "asp", "cys", "gln", "glu", "his", "ile", "leu", "lys", "met", "phe", "pro", "ser", "thr", "trp", "tyr", "val"};
-    (*ROTAMER_LIBRARY)["GLY"] = (*ROTAMER_LIBRARY)["ALA"] = NULL;
+    (*ROTAMER_LIBRARY)["GLY"] = new vector<double *>;
+    (*ROTAMER_LIBRARY)["ALA"] = new vector<double *>;
     for (int i = 0; i < 18; i++) {
         residue = almost_all_residues[i];
         filename = "rotamers/" + residue + ".lib";
