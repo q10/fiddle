@@ -60,7 +60,7 @@ void test_initialize_rotamer_for_residue() {
     return;
 }
 
-void test_initialize_rotamer_for_residue() {
+void test_initialize_rotamer_for_chain() {
     initialize_constants();
     string filename = "pdbs/sample.pdb";
     Chain * chain = get_chain_from_perl_gen_pdb_file(filename);
