@@ -133,7 +133,7 @@ void pdbatm2(Atom * atom, Atom * atom_a, Atom * atom_b, Atom * atom_c, double bo
             a /= c;
             b /= c;
             c = 0.0;
-            cerr << "Warning: Sum of bond angles too large at atom " << atom << endl;
+            // cerr << "Warning: Sum of bond angles too large at atom " << atom << endl;
         } else
             c = 0.0;
 
